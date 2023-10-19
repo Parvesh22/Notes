@@ -1,0 +1,2934 @@
+Q1. What is Laravel?
+A:  Laravel is a framework of php which is used to build website at scale.
+    It is very helpful to create a website more faster and dynamic.
+    In this framework we mainly use MVC pattern for building website.
+
+Q2. What is Composer?
+A: Composer is a dependency and package manager for our website.
+   It is mainly used to install dependency and package in our applications.
+   In this we use command lines for installing packages in our website.
+
+Q3. What is Scale?
+A:  Scale refers to making our website more optimized and reducing unnecessary re=renderation.
+    This improves functioning of our website.
+
+Q4. What are Routes?
+A:  Routes are defined in web.php and api.php in our applications.
+    Route specify HTTP verb like GET, POST, PUT, PATCH, DELETE.
+    The corresponding action to be taken when a request matches the defined pattern.
+
+Q5. What are Routing Parameters?
+A:  We can define dynamic route Parameters in URL pattern by enclosing them in curly braces '{}'.
+    These Parameters can be accessed within you controller or closure.
+
+Q6. What are Named Routes?
+A:  Laravel allows you to assign names to your routes using the name method.
+    Named routes make it easier to generate URLs or redirect to specific routes in your application.
+
+Q7. What are Reverse Route?
+A:  Reverse routing in the laravel means the process that is used to generate the URLs which are based on the names or symbols. 
+    Example : Route:: get(‘list’, ‘blog@list’);
+
+Q8. What are closures?
+A:  Closures are anonymous functions that can be stored in variables, passed as arguments to other functions, or returned as values from other functions.
+    for example:
+      $addition = function($a, $b) {
+                        return $a + $b;
+                    };
+      $result = $addition(2, 3);
+    closure in PHP is a function that can be created without a specified name.
+
+Q9. What are Route Constraints?
+A:  Route constraints are used to restrict which routes are matched based on specified conditions.
+    Example:
+        // Using regex constraint
+        Route::get('/user/{id}', 'UserController@show')->where('id', '[0-9]+');
+
+        // Using custom callback constraint
+        Route::get('/user/{name}', 'UserController@show')->where('name', function ($value) {
+            return strlen($value) > 3;
+        });
+
+Q10. What is Blade in Laravel?
+A: Blade is the templating engine used in the Laravel PHP framework.
+   In Laravel, the default template engine is Blade.
+   It is a view Part Which contains HTML elements.
+
+Q11. Cache Clear in laravel?
+A: In Laravel, you can clean various types of cache.
+   1. Clear Application Cache:php artisan cache:clear
+   2. Clear Configuration Cache: php artisan config:clear
+   3. Clear Compiled Views (Blade Cache): php artisan view:clear
+   4. Clear Route Cache: php artisan route:clear
+
+Q12. What is Controller in Laravel?
+A: Controllers are an essential part of the Model-View-Controller (MVC) architectural pattern.
+   It handles incoming HTTP requests and contains the application logic for processing those requests.
+   They coordinate with models to retrieve or update data.
+
+Q13. What is Open blade from controller in Laravel?
+A: It refers to the process of rendering a Blade template (a view) from a controller.
+   Example:
+       public function index()
+                {
+                    // Your logic here
+
+                    return view('myview', ['data' => $someData]);
+                }
+
+Q14. What is Resource Controller?
+A: A resource controller is a type of controller that provides a convenient and consistent way to handle the typical CRUD (Create, Read, Update, Delete) operations.
+   It automatically defines methods for all crud operations like index() for listing, create() for showing the create form, store() for storing, show() for displaying a single resource, edit() for showing the edit form, update() for updating, and destroy() for deleting.
+   To see the list of registered routes, you can use the php artisan route:list command in your terminal.
+   Resource Controller is also known as Implict Controller.
+   for example:
+     1. Generate the resource controller using the Artisan command-line tool:
+           php artisan make:controller ArticleController --resource
+     2. Define the resource routes in your routes/web.php or routes/api.php file:
+           Route::resource('articles', 'ArticleController');
+     3. In ArticleController:
+              class ArticleController extends Controller
+                        {
+                            public function index()
+                            {
+                                // List all articles
+                            }
+
+                            public function create()
+                            {
+                                // Show the create form
+                            }
+
+                            public function store(Request $request)
+                            {
+                                // Store a new article
+                            }
+
+                            public function show($id)
+                            {
+                                // Show a single article
+                            }
+
+                            public function edit($id)
+                            {
+                                // Show the edit form
+                            }
+
+                            public function update(Request $request, $id)
+                            {
+                                // Update an existing article
+                            }
+
+                            public function destroy($id)
+                            {
+                                // Delete an article
+                            }
+                      }
+
+Q15. What are migrations in Laravel?
+A: Migrations are a powerful feature that allows you to manage your database schema.
+   Migrations are essentially a set of files that define how the database tables should be created or modified.
+   It helps to create tables through our text editor by passing command lines.
+   Generate a new migration file using Artisan: php artisan make:migration create_users_table
+   Example:
+        In file:
+            public function up()
+                    {
+                        Schema::create('users', function (Blueprint $table) {
+                            $table->id();
+                            $table->string('name');
+                            $table->string('email')->unique();
+                            $table->timestamp('email_verified_at')->nullable();
+                            $table->string('password');
+                            $table->rememberToken();
+                            $table->timestamps();
+                        });
+                    }
+        Than run php artisan:migrate
+
+Q16. How to add column to a table using migration?
+A: Run this command : php artisan make:migration add_column_name_to_table_name
+   Open the newly generated migration file, which is located in the database/migrations directory.
+   Edit this:
+       public function up()
+            {
+                Schema::table('users', function (Blueprint $table) {
+                    $table->date('birthdate')->nullable(); // Add a nullable date column
+                });
+            }
+    
+Q17. What is up() and down() function in migration file?
+A: In Up Method:
+      The up() method defines the changes you want to make to the database schema when you run the migration. 
+      For example, you might use the create method to create a new table, or the addColumn method to add a new column to an existing table.
+   In down Method:
+      The down() method defines the reverse of the changes made in the up() method.
+      Like droping of column or table.
+
+Q18. What is Rollback migration in laravel?
+A:  To rollback the last batch of migrations, you can use php artisan migrate:rollback. 
+    To rollback a specific migration batch or a specific number of batches, you can use the --step option. For example, php artisan migrate:rollback --step=2 will roll back the last two batches of migrations.
+
+Q19. How to migrate specefic file?
+A: php artisan migrate --path=/path/to/migrations-directory/
+
+Q20. How to rollback specefic file?
+A: php artisan migrate:rollback --path=database/migrations
+
+Q21. How to truncate table in Laravel?
+A: DB::table('your_table_name')->truncate();
+   YourModel::truncate();
+
+Q21. How to create foreign key constraint?
+A: In migration file, edit file like this:
+    public function up()
+        {
+            Schema::create('posts', function (Blueprint $table) {
+                $table->id();
+                $table->string('title');
+                $table->text('content');
+                $table->unsignedBigInteger('user_id'); // Foreign key column
+
+                // Define the foreign key constraint
+                $table->foreign('user_id')->references('id')->on('users');
+
+                $table->timestamps();
+            });
+        }
+
+Q22. How to check migration status in Laravel?
+A: php artisan migrate:status
+
+Q23. What is ORM (Object Relational Mapping)?
+A: It is a technique used to interact with databases in an object-oriented manner, making it easier to work with database records.
+   Eloquent provides methods for performing CRUD (Create, Read, Update, Delete) operations,  For example, you can create a new record by instantiating a model object, set its properties, and then call save().
+   It provides an elegant and expressive syntax for working with database tables and records..
+   Eloquent allows you to define relationships between models, such as one-to-one, one-to-many, and many-to-many relationships. 
+ 
+Q24. What are Laravel Model Properties?
+A:  1.Table Name: 
+        We can customize tha table name in a model by adding this:
+        protected $table = 'custom_table_name';
+    2.Primary Key:
+        Your table uses a different primary key column name, you can specify it using the protected $primaryKey property:
+        protected $primaryKey = 'custom_id';
+    3.timestamp:
+       Eloquent expects your database table to have created_at and updated_at timestamp columns. These columns are used to automatically track the creation and modification timestamps of records. You can disable timestamp handling by setting the public $timestamps property to false.
+        public $timestamps = false;
+    4.Casting:
+       You can specify data types for model attributes using the protected $casts property. This helps in automatically converting attribute values to specific data types when retrieving them.
+       This is also known as attribute casting.
+       protected $casts = [
+                'is_admin' => 'boolean',
+                'age' => 'integer',
+            ];
+    5.Fillable:
+        The fillable property in a Laravel model specifies which attributes (columns) can be mass-assigned when creating or updating records. 
+        Mass-assignment is when you pass an array of data to methods like create() or update() to set multiple attributes at once. This property helps protect your model from unintentional overwriting of attributes.
+           Example:
+              class Post extends Model
+                    {
+                        protected $fillable = ['title', 'content'];
+                    }
+            
+              $post = Post::create([
+                    'title' => 'New Post',
+                    'content' => 'This is the content of the new post.',
+                ]);
+    6.Hidden and Visible Properties: 
+         This allows you to specify which attributes should be visible when converting a model instance to an array or JSON. 
+           Example:
+              protected $hidden = ['password'];
+                // OR
+              protected $visible = ['name', 'email'];
+
+Q25. What is Mass Fillable Assignment?
+A: Mass fillable assignment, often referred to as "mass assignment," is a feature in Laravel that allows you to assign multiple values to a model's attributes in a single operation.
+   In Laravel, mass assignment typically involves using methods like create() or update() to set multiple attributes of a model at once.
+   Like:
+         $user = User::create([
+                'name' => 'John Doe',
+                'email' => 'john@example.com',
+                'age' => 30,
+            ]);
+        
+        $user = User::find(1); // Find the user with ID 1
+        $user->update([
+            'name' => 'Updated Name',
+            'email' => 'updated@example.com',
+        ]);
+
+Q26. Search methods in Laravel?
+A: 1. ->where('name', '=', 'John')
+   2. ->whereIn('id', [1, 2, 3])
+   3. ->whereBetween('age', [18, 30])
+   4. ->orderBy('name', 'asc')
+   5. ->groupBy('product_id')
+   6. ->having('total_sales', '>', 1000)
+   7. User::find(1);
+   8. ->take(1) //LIMIT
+   9. ->skip(20) //OFFSET
+   10. ->first()
+   11. User::findOrFail($id)
+   12. ->selectRaw('your_expression AS alias')
+   13. ->whereNotIn('id', [1, 2, 3])
+   14. ->whereNotBetween('age', [18, 30])
+   15. User::findOrFail(1)
+
+Q27. Delete methods in Laravel?
+A: 1. User::destroy(1);
+   2. $user->delete();
+   3. $userIdsToDelete = [1, 2, 3];
+      User::destroy($userIdsToDelete);
+
+Q28. url() vs route()?
+A: 1. url() :
+      It is used to generate a URL for a given path. It does not rely on the named routes defined in your application but rather constructs a URL based on the path you provide.
+   Example :
+      $url = url('/posts');
+      result : http://example.com/posts
+   2. route() :
+      If you want to generate a URL for a named route, you can use route();
+      Example :
+         Route::get('/posts/{id}', 'PostController@show')->name('posts.show');
+         $url = route('posts.show', ['id' => 1]);
+
+Q29. What is csrf (Cross-Site Request Forgery) token and how to disable it?
+A: When a user logs in or visits a web page, the server generates a unique CSRF token and stores it in a session variable.
+   When the server receives a request, it checks if the CSRF token in the request matches the one stored in the session.
+   Server rejects the request if doesn't match.
+
+   To disable:
+      Open the app/Http/Middleware/VerifyCsrfToken.php file.
+      protected $except = [
+                'your/route',  // Disable CSRF protection for a specific route
+                'api/*',       // Disable CSRF protection for all routes matching 'api/*'
+            ];
+
+Q30. Joins Method in laravel?
+A: 1. Using Query Builder:
+             $result = DB::table('table1')
+                        ->join('table2', 'table1.column', '=', 'table2.column')
+                        ->select('table1.column1', 'table2.column2')
+                        ->get();
+   
+   2. Using Eloquent ORM:
+            $result = Model1::join('table2', 'model1.column', '=', 'table2.column')
+                        ->select('model1.column1', 'table2.column2')
+                        ->get();
+
+   3. Different Types of Joins:
+              like join(), leftJoin(), rightJoin(), and crossJoin()
+                        $result = DB::table('table1')
+                            ->leftJoin('table2', 'table1.column', '=', 'table2.column')
+                            ->select('table1.column1', 'table2.column2')
+                            ->get();
+
+Q31. What is Validation in laravel?
+A: Laravel validation rules are typically defined in the controller that handles the incoming request.
+   You can define validation rules using the validate method.
+   Example:
+         $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:8',
+            ]);
+
+    To fetch error:
+          <div class="alert alert-danger">
+                @if ($errors->any())
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+Q32. How to add validataion on request globally?
+A: 1. php artisan make:request YourRequestName
+   2. Open the generated request class, which is located in the app/Http/Requests directory, and locate the rules method. In this method, you can define your custom error messages using the messages method:
+           public function rules()
+                    {
+                        return [
+                            'name' => 'required|string|max:255',
+                            'email' => 'required|email|unique:users',
+                            'password' => 'required|min:8',
+                        ];
+                    }
+
+                    public function messages()
+                    {
+                        return [
+                            'name.required' => 'The name field is required.',
+                            'email.required' => 'The email field is required.',
+                            'email.unique' => 'The email address has already been taken.',
+                            'password.required' => 'The password field is required.',
+                            'password.min' => 'The password must be at least :min characters.',
+                            // Add more custom messages here.
+                        ];
+                    }
+
+Q33. How to Customizing Error Messages Directly in the Controller?
+A: You can use the validate method and pass a custom array of error messages as the second argument.
+   public function store(Request $request)
+        {
+            $customMessages = [
+                'name.required' => 'The name field is required.',
+                'email.required' => 'The email field is required.',
+                'email.unique' => 'The email address has already been taken.',
+                'password.required' => 'The password field is required.',
+                'password.min' => 'The password must be at least :min characters.',
+                // Add more custom messages here.
+            ];
+
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:8',
+            ], $customMessages);
+        }
+
+Q34. What is Sessions in Laravel and How to manage?
+A: 1. Storing Data in Sessions:
+             Session::put('key', 'value');
+   2. Retrieving Data from Sessions:
+             Session::get('key');
+   3. Checking if a Session Variable Exists:
+             if (session()->has('key')) {
+                    // The 'key' exists in the session
+             }
+   4. Removing Data from Sessions:
+             Session::forget('key');
+   5. Flash Session:
+          It's like a quick way to show a message or data for one page load, typically used for success messages or feedback. 
+          for example:
+                  You store the "Thank you!" message in a flash session. (Session::flash('key', 'value'))   
+                  This message is saved only for the next page load; after that, it's automatically removed.
+
+Q35. How to redirect in Laravel?
+A: // Basic redirect to a URL
+    return redirect('https://example.com');
+
+    // Redirect to a named route
+    return redirect()->route('route.name');
+
+    // Redirect with data (e.g., flash data for the next request)
+    return redirect()->route('route.name')->with('key', 'value');
+
+Q36. What is Pagination in Laravel?
+A: It is a technique used to divide large set of database results into smaller and manageable pages.
+   Example:
+        $products = DB::table('products')->paginate(10); // 10 results per page
+        
+        @foreach ($products as $product)
+            <!-- Display product information -->
+        @endforeach
+
+        {{ $products->links() }}  //pagination links
+
+Q37. What are soft deletes in laravel?
+A: Soft deletes are a feature that allows you to "softly" delete records from a database table without actually removing them from the database.
+   Example:
+       1. Database Schema:
+            You need to add a deleted_at column to the database table for the model you want to enable soft deletes on.
+       2. Model Configuration:
+            In your Eloquent model, you should use the SoftDeletes trait and specify the deleted_at column in the $dates property. This tells Laravel to treat the column as a timestamp.
+                use Illuminate\Database\Eloquent\Model;
+                use Illuminate\Database\Eloquent\SoftDeletes;
+
+                class YourModel extends Model
+                {
+                    use SoftDeletes;
+
+                    protected $dates = ['deleted_at'];
+                }
+       3. Soft Deleting Records:
+             To soft delete a record, you can simply call the delete() method on the model instance:
+                 $record = YourModel::find(1);
+                 $record->delete();
+       4. Fetch Soft Deleted Records:
+             $records = YourModel::withTrashed()->get();
+       5. Restoring Soft Deleted Records:
+             $softDeletedRecord = YourModel::onlyTrashed()->find(1);
+             $softDeletedRecord->restore();
+       6. Permanently Deleting Records:
+             $softDeletedRecord = YourModel::onlyTrashed()->find(1);
+             $softDeletedRecord->forceDelete();
+
+Q38. What is Query Builder in Laravel?
+A: Query Builder is a powerful and expressive way to interact with your database. 
+   It allows you to retrieve, insert, update, and delete records in your database without writing raw SQL queries. 
+
+Q39. Query Builder vs Eloquent ORM?
+A: Eloquent ORM:
+    1. Object-Oriented Approach:
+         Eloquent is an ORM that allows you to work with your database using object-oriented syntax.
+    2. Relationships:
+         Eloquent provides built-in support for defining and working with relationships between database tables, such as one-to-many, many-to-many, and more.
+    3. Automatic Query Generation:
+         It automatically generates query based on methods.
+    4. Validation and Mass Assignment:
+          Eloquent includes validation and mass assignment.
+   Laravel QUery Builder:
+    1. SQL Query Building:
+          It's suitable for situations where you need to construct complex queries or perform raw SQL operations.
+    2. Flexibility:
+          It provides Flexibility while working with multiple database tables Directly.
+    3. Performance:
+          Query Builder can offer better performance for specific queries compared to Eloquent, especially when dealing with large datasets or complex joins.
+
+ Q40. How to run raw sql queries in Laravel?
+ A: $value = 'value';
+    $results = DB::select('SELECT * FROM your_table WHERE column = :value', ['value' => $value]);
+ 
+ Q41. What are Relationships in Laravel?
+ A: It refer to the associations between different database tables or Eloquent models.
+    These relationships define how different tables or models are connected or related to each other within your application's database schema.
+
+Q42. What are cookies in Laravel?
+A:  Cookies are a way to store small pieces of data on the client's browser, which can be later retrieved.
+    1. Set Cookie:
+          Cookie::queue('username', 'john_doe', 60); // Sets a cookie named 'username' with the value 'john_doe' that expires in 60 minutes.
+                 OR
+          return response('Hello, World!')->cookie('username', 'john_doe', 60);
+
+    2. Getting Cookies:
+          $username = $request->cookie('username');
+    3. Checking if a Cookie Exists:
+          $request->hasCookie('username')
+    4. Deleting Cookies:
+          return response('')->cookie('username', '', -1);
+    
+Q43. What is one-to-one relationship in Laravel?
+A: A one-to-one relationship in Laravel defines a connection where each record in one database table is associated with exactly one record in another table.
+   It is defined by the method hasOne in model.
+   hasOne method is used to define a one-to-one relationship between two database tables.
+   This method is typically used in a model to specify that the current model has a single related record in another table based on a foreign key.
+   Example:
+           1. DB:
+                      -- users table
+                        CREATE TABLE users (
+                            id INT PRIMARY KEY,
+                            name VARCHAR(255),
+                            email VARCHAR(255),
+                            profile_id INT
+                        );
+
+                        -- profiles table
+                        CREATE TABLE profiles (
+                            id INT PRIMARY KEY,
+                            bio TEXT,
+                            website VARCHAR(255)
+                        );
+           2. Eloquent Models:
+                     // User Model
+                    class User extends Model {
+                        public function profile() {
+                            return $this->hasOne(Profile::class);
+                        }
+                    }
+
+                    // Profile Model
+                    class Profile extends Model {
+                        public function user() {
+                            return $this->belongsTo(User::class);
+                        }
+                    }
+           3. Retrieving Data:
+                    // Retrieve a user and their associated profile
+                    $user = User::with('profile')->find(1);
+
+                    // Access user and profile data
+                    $userName = $user->name;
+                    $userEmail = $user->email;
+                    $userBio = $user->profile->bio;
+                    $userWebsite = $user->profile->website;
+           4. Data got retrved format:
+                     // Create a new user and associated profile
+                    $user = User::create([
+                        'name' => 'John Doe',
+                        'email' => 'john@example.com',
+                        'profile' => [
+                            'bio' => 'Web Developer',
+                            'website' => 'https://johndoe.com',
+                        ],
+                    ]);
+            5. Parameters of HasOne Relationships:
+                 return $this->hasOne(relatedModel, foreignKey, localKey); 
+                 
+                 foreignKey is set to 'profile_id'.
+                 localKey is the primary key of profile table
+ 
+ Q44. What is One to Many Relationship in Laravel?
+ A: Same as above just the diffrence is that there is more than one relationship between database table or Eloquent Model.
+    It is defined by the method hasMany in model.
+    hasMany method is used to define a one-to-many relationship between two database tables.
+    This method is typically used in a model to specify that the current model has a multiple related record in another table based on a foreign key.
+   
+    Example:
+        'name' => 'J.K. Rowling',
+        'bio' => 'British author of the Harry Potter series',
+        'books' => [
+            ['title' => 'Harry Potter and the Philosopher\'s Stone'],
+            ['title' => 'Harry Potter and the Chamber of Secrets'],
+        ],
+
+Q45. How to add data in one to one relationship and one to many?
+A: In One to One:
+    // Create a new user and associated profile
+        $user = User::create([
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'profile' => [
+                'bio' => 'Web Developer',
+                'website' => 'https://johndoe.com',
+            ],
+        ]);
+   In One to Many:
+     // Create a new author and associated books
+            $author = Author::create([
+                'name' => 'J.K. Rowling',
+                'bio' => 'British author of the Harry Potter series',
+                'books' => [
+                    ['title' => 'Harry Potter and the Philosopher\'s Stone'],
+                    ['title' => 'Harry Potter and the Chamber of Secrets'],
+                ],
+            ]);
+
+Q46. What is one to one inverse relationship?
+A: With the one-to-one inverse relationship defined, you can easily access the related record from either the User or Profile model.
+
+Q47. What is default relationship in Laravel?
+A: Relationships are not automatically generated or default; you need to define them in your models based on your database schema.
+   
+Q48. What is hasOneThrough relationship?
+A: It is a type of Eloquent relationship that allows you to define a relationship between two models.
+   This relationship is essentially a "has-one" relationship that traverses through another related model to reach the final related model.
+   It is defined by the method hasOneThrough in model.
+
+Q49. How to use hasOneThrough Relationship?
+A: 1. DB:
+        mechanics
+            id - integer
+            name - string
+        
+        cars
+            id - integer
+            model - string
+            mechanic_id - integer
+        
+        owners
+            id - integer
+            name - string
+            car_id - integer
+
+    2. Make Relation:
+            class Mechanic extends Model
+                {
+                    /**
+                    * Get the car's owner.
+                    */
+                    public function carOwner(): HasOneThrough
+                    {
+                        return $this->hasOneThrough(
+                            Owner::class,
+                            Car::class,
+                            'mechanic_id', // Foreign key on the cars table...
+                            'car_id', // Foreign key on the owners table...
+                            'id', // Local key on the mechanics table...
+                            'id' // Local key on the cars table...
+                        );
+                    }
+                }
+     3. Data Retrivation:
+                $mechanic = Mechanic::find(1); // Replace 1 with the mechanic's ID you want to fetch.
+
+                // Get the car's owner through the mechanic
+                $owner = $mechanic->carOwner;
+
+                if ($owner) {
+                    echo "Mechanic: {$mechanic->name}<br>";
+                    echo "Car Model: {$owner->car->model}<br>";
+                    echo "Owner: {$owner->name}<br>";
+                } else {
+                    echo "No owner found for this mechanic's car.";
+                }
+
+     Note: HasOneThrough Accessed data till the last model.
+
+Q50. Add Data using HasOneThrough?
+A: // Create a new Mechanic
+    $mechanic = new Mechanic();
+    $mechanic->name = 'John Doe'; // Replace with the mechanic's name.
+    $mechanic->save();
+
+    // Create a new Car for the Mechanic
+    $car = new Car();
+    $car->model = 'Car Model 1'; // Replace with the car's model.
+    $car->mechanic_id = $mechanic->id; // Associate the car with the mechanic.
+    $car->save();
+
+    // Create a new Owner for the Car
+    $owner = new Owner();
+    $owner->name = 'Car Owner 1'; // Replace with the owner's name.
+    $owner->car_id = $car->id; // Associate the owner with the car.
+    $owner->save();
+
+Q51. What is hasManyThrough Relationship?
+A: Same Process as Hasone, the diffrence is that it return multiple records.
+
+Q52. What is many-to-many relationship?
+A: A Many-to-Many relationship is a type of database relationship in which multiple records in one table are associated with multiple records in another table.
+   Unlike One-to-Many relationships where one table has a foreign key referencing the other table, in a Many-to-Many relationship, there is no direct foreign key relationship between the two main tables. 
+   Instead, the relationship is defined through the intermediate table. like(user_role)
+   It is defined by the method belongsToMany in model.
+   Example:
+       1. DB:
+            users
+                id - integer
+                name - string
+            
+            roles
+                id - integer
+                name - string
+            
+            role_user
+                user_id - integer
+                role_id - integer
+       2. Model Structure in User Model:
+            class User extends Model
+                {
+                    public function roles(): BelongsToMany
+                    {
+                        return $this->belongsToMany(Role::class);
+                    }
+                }
+       3. Get Roles of user:
+                use App\Models\User;
+ 
+                $user = User::find(1);
+                
+                foreach ($user->roles as $role) {
+                    // ...
+                }
+    Params : return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+
+Q53. HasOne, HasOneThrough, Many To Many?
+A: HasOne means relationship between two models.
+   hasOneThrough means relationship between multiple models. We use it  when you have three models and you want to retrieve a related record from the third model through the second model.
+   Many to Many means relationship through any other intermediate table without using foreign key in local table.
+
+Q54. What is one-to-one Polymorphic relationship?
+A: A One-to-One Polymorphic relationship in Laravel is a type of relationship that allows a model to belong to more than one other type of model.
+   This relationship is useful in scenarios where you want to keep the relationship flexible.
+   Suppose you have multiple types of content (e.g., Post, Video, Photo), and each of these content types can have one associated comment.
+   To use this we have to return morphOne method in comment and morpheTo method in other 3 models.
+
+Q55. What is Tinker and How to use it?  (REPL explained in Q. 149)
+A: Artisan Tinker is a command-line tool provided by Laravel that allows you to interact with your Laravel application in a REPL (Read-Eval-Print Loop) environment.
+   It provides an interactive console where you can execute PHP code.
+   Example:
+       1. Open tinker:
+               php artisan tinker
+       2. Like for updating:
+                   $ php artian tinker
+                   >>> $user=App\User::find(1)
+                   => App\User {
+                          id:2,
+                          name: "Kawal",
+                          age:30,
+                          email:"test@gmail.com"  
+                      } 
+                   >>> $user->name="Kawaljeet"
+                   =>"Kawaljeet"
+                   >>> $user->save()
+                   => true
+         OR for retrivation :
+                  $ php artian tinker
+                   >>> user=App\User::where("name", "=", "Kawal")
+                   => App\User {
+                          id:2,
+                          name: "Kawal",
+                          age:30,
+                          email:"test@gmail.com"  
+                      }
+
+Q56. What are Seeders?
+A: Seeders are classes that allow you to populate your database tables with sample or default data.
+   Example:
+       1. Run Command : php artisan make:seeder UsersTableSeeder
+          This will create a file in database\UserTableSeeder.php
+       2. Define the data you want to insert in to 'run' method:
+               use Illuminate\Database\Seeder;
+                use Illuminate\Support\Facades\DB;
+
+                class UsersTableSeeder extends Seeder
+                {
+                    public function run()
+                    {
+                        DB::table('users')->insert([
+                            'name' => 'John Doe',
+                            'email' => 'john@example.com',
+                            'password' => bcrypt('password'),
+                        ]);
+
+                        // You can insert more records or use factories to create multiple records.
+                    }
+                }
+       3. php artisan db:seed --class=UsersTableSeeder
+
+Q57. What is factories in Laravel?
+A: Factories are a feature of Eloquent ORM that allows us to define and generate fake data.
+   Factories are commonly used for seeding databases with test data.
+   Example:
+     if you want to make factories for article table or model
+       1. Run command line : php artisan make:factory ArticleFactory --model=Article
+       2. In the generated ArticleFactory.php file, you can define how the fake data should be created for your Article model. Here's an example:
+                        use Illuminate\Database\Eloquent\Factories\Factory;
+                        use App\Models\Article;
+
+                        $factory->define(Article::class, function (Faker\Generator $faker) {
+                            return [
+                                'title' => $faker->sentence,
+                                'content' => $faker->paragraph,
+                                'published_at' => now(),
+                            ];
+                        });
+       3. For using it in controller:
+                  Creating a single fake record:
+                          $article = Article::factory()->create();
+                  Creating multiple fake records:
+                          $articles = Article::factory(10)->create();
+       4. In seeders:
+                    use Illuminate\Database\Seeder;
+                    use App\Models\Article;
+
+                    class ArticleSeeder extends Seeder
+                    {
+                        public function run()
+                        {
+                            Article::factory(20)->create();
+                        }
+                    }
+
+                  than run, php artisan db:seed --class=ArticleSeeder
+
+Q58. What is Faker in Laravel?
+A:  Faker is a PHP library that is used for generating fake data.
+    Example:
+        use Faker\Factory as FakerFactory;
+        $faker = FakerFactory::create();
+        $fullName = $faker->name; // Generates a random fake name
+
+Q59. What are Accessors?
+A: Accessors are methods defined within your Eloquent model that allow you to format or compute values from database attributes before they are presented to the application. 
+   Example:
+       1. Modify Model:
+                  class User extends Model
+                    {
+                        public function getFullNameAttribute()
+                        {
+                            return "{$this->first_name} {$this->last_name}";
+                        }
+
+                        public function getNumberAttribute($value)
+                        {
+                            return strtoupper($value); // For example, convert to uppercase
+                        }
+
+                    }
+       2. Use it:
+                $user = User::find(1);
+                echo $user->full_name; // Accesses the accessor method and prints the full name
+
+Q60. What are Mutators?
+A: Mutators are methods defined within your Eloquent model that allow you to modify and format attributes before they are saved to the database.
+   Example:
+           class User extends Model
+            {
+                public function setFirstNameAttribute($value)
+                {
+                    $this->attributes['first_name'] = ucfirst($value);
+                }
+            }
+
+            $user = new User;
+            $user->first_name = 'john'; // The mutator capitalizes the value
+            $user->save(); // The capitalized value is saved to the database
+
+Q61. What are Query Scopes?
+A: Query scopes in Laravel are a way to define reusable query constraints on an Eloquent model. 
+   Query scopes are particularly useful when you need to apply specific filters or conditions to your database queries in multiple places within your application.
+   Example:
+        1. Define Query Scope:
+                   class User extends Model
+                        {
+                            public function scopeActive($query)
+                            {
+                                return $query->where('is_active', true);
+                            }
+                        }
+        
+        2. Use Query Scope:
+                   // Retrieve all active users
+                    $activeUsers = User::active()->get();
+
+Q62. How to use same query scopes in multiple models?
+A: We can define a triat in another file and use it in many classes.
+
+Q63. What is slug in Laravel?
+A: A "slug" is a URL-friendly version of a string, typically used for generating clean and readable URLs.
+   A slug is generally a lowercase string that contains only alphanumeric characters (letters and numbers), hyphens (-), or underscores (_).
+   Example:
+          Source String: "This is a Sample Title!"
+          Slug: "this-is-a-sample-title"
+
+Q64. How to use Slug?
+A: use Illuminate\Support\Str;
+
+   $title = "How to Create Slugs in Laravel";
+   $slug = Str::slug($title);
+ 
+
+   $customSlug = Str::slug("This is a custom slug!", '_'); // Custom separator
+   $transliteratedSlug = Str::slug("Café au Lait", '-'); // Transliterate non-ASCII characters
+   $limitedSlug = Str::slug("A very long title for a blog post", '-', 50); // Limit length to 50 characters
+
+Q65. What is Exception in Laravel?
+A: All exceptions are handled by the App\Exceptions\Handler class.
+   This class contains a register method where you may register custom exception reporting.
+   There are many default exception like:
+           1. ValidationException:Handling validation errors and returning validation error responses.
+           2. ModelNotFoundException: Handling cases where a specific record or model instance is not found in the database.
+           3. QueryException:Thrown when a database query encounters an error.
+           4. AuthorizationException:: Handling authorization errors and returning a 403 Forbidden response.
+           5. HttpException: like 404, 500 internal server error.
+           6. TokenMismatchException
+
+Q66. How to modify errors?
+A: In Laravel, you can customize error pages by creating and modifying the error views within the resources/views/errors directory.
+   Like 404.blade.php, 500.blade.PHP
+
+Q67. How to make custom Exception?
+A: 1. Create a custom exception class:
+           Run php artisan make:exception CustomException and here is the code and add this constructor
+           // app/Exceptions/CustomException.php
+            namespace App\Exceptions;
+
+            use Exception;
+
+            class CustomException extends Exception
+            {
+
+                namespace App\Exceptions;
+
+                use Exception;
+
+                class CustomException extends Exception
+                {
+                    public function __construct($message = "Custom Exception Occurred", $code = 0, Exception $previous = null)
+                    {
+                        parent::__construct($message, $code, $previous);
+                    }
+                }
+            }
+
+
+    2. Throw the Custom Exception on Validation Failure:
+            use Illuminate\Http\Request;
+            use App\Exceptions\CustomException;
+
+            public function store(Request $request)
+            {
+                 if ($num == 1) {
+                       throw new CustomException('This is a custom exception message Here.');  //throw the custom exception
+                 }
+          }
+    3. Handling the Custom Exception:
+           // app/Exceptions/Handler.php
+
+                use App\Exceptions\CustomException;
+
+                public function render($request, Exception $exception)
+                {
+                    if ($exception instanceof CustomException) {    //when the instance of this exception created on its throw, this check will work
+                        return response()->view('errors.custom', ['exception' => $exception], 500);
+                    }
+
+                    return parent::render($request, $exception);
+                }
+    4. Error View:
+           <!-- resources/views/errors/custom.blade.php -->
+
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Custom Exception</title>
+                </head>
+                <body>
+                    <h1>Custom Exception</h1>
+                    <p>{{ $exception->getMessage() }}</p>
+                </body>
+                </html>
+
+Q68. What are helpers in Laravel and What are default helpers?
+A: Helpers are function that provide common functionality and simplify common tasks in your application.
+   1. env Helper : $appEnvironment = env('APP_ENV');
+   2. Request Helper : $inputValue = request('input_name');
+   3. Url Helper : $url = url('/contact'); 
+   4. Route helper : $url = route('home');
+   5. App Helper :  You can use app() to retrieve instances of services or classes that are registered in the Laravel service container. For example:
+                           $userService = app('userService'); // Retrieves an instance of the 'userService' from the container.
+
+Q69. How to make custom helper?
+A: 1. Create a Helper file: // app/Helpers/CustomHelper.php
+   2. Write Helper Functions:
+            namespace App\Helpers;
+            function formatDate($date)
+            {
+                return date('F j, Y', strtotime($date));
+            }
+   3. Autoload the Helper File:
+              "autoload": {
+                    "classmap": [
+                        // ...
+                    ],
+                    "psr-4": {
+                        "App\\": "app/"
+                    },
+                    "files": [
+                        "app/Helpers/CustomHelper.php"
+                    ]
+                },
+      Pass the path in the authload object key files.
+   4. composer dump-autoload
+   5. $date = '2023-09-18';
+      $formattedDate = formatDate($date);   
+      Now you can access this function anywhere in your laravel application.
+
+Q70. What is Middleware?
+A: Middleware allows you to filter and process incoming HTTP requests and outgoing responses.
+   providing a way to perform actions such as authentication, authorization, logging, and more before the request reaches the application's core logic.
+   Example:
+        1. php artisan make:middleware CheckAge
+        2. Modify generated file of CheckAge:
+                    class AgeCheckMiddleware
+                        {
+                            public function handle($request, Closure $next, $minAge)
+                            {
+                                // Check if the 'age' parameter exists in the request
+                                if ($request->has('age')) {
+                                    $userAge = $request->input('age');
+
+                                    // Check if the user's age is greater than or equal to the minimum age
+                                    if ($userAge >= $minAge) {
+                                        return $next($request);
+                                    }
+                                }
+
+                                // If the age check fails, redirect the user or return an error response
+                                return redirect('/not-allowed'); // You can customize this behavior
+                            }
+                        }
+       3. Add middleware class path in kernal.php in global, route or group middleware.
+
+Q71. Type of Middleware?
+A: 1. Global Middleware:
+              Global middleware runs on every HTTP request to your application.
+              Example:
+                    protected $middleware = [
+                        \App\Http\Middleware\AgeCheckMiddleware::class,
+                    ];
+   2. Route Middleware:
+              Route middleware is applied to specific routes or groups of routes. 
+              protected $routeMiddleware = [
+                    'checkAge' => \App\Http\Middleware\AgeCheckMiddleware::class,
+                ];
+
+              Specefic Route Example:
+                    Route::get('/dashboard', 'DashboardController@index')->middleware('checkAge');
+              Group Specefic Route:
+                   // Apply AgeCheckMiddleware to multiple routes
+                    Route::group(['middleware' => 'checkAge'], function () {
+                        Route::get('/restricted1', 'RestrictedController@index1');
+                        Route::get('/restricted2', 'RestrictedController@index2');
+                        Route::get('/restricted3', 'RestrictedController@index3');
+                    });
+    3. Middleware groups:
+               The 'web' middleware group is typically used for web routes.
+               The 'api' middleware group is used for API routes.
+
+Q72. How to make custom route file and also add middleware?
+A: 1. Add file in routes : admin.php
+   2. Modify boot method in RouteServiceProvider:
+                public function boot(): void
+                    {
+                        RateLimiter::for('api', function (Request $request) {
+                            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+                        });
+
+                        $this->routes(function () {
+                            Route::middleware('api')
+                                ->prefix('api') 
+                                ->group(base_path('routes/api.php'));
+
+                            Route::middleware('web')
+                                ->group(base_path('routes/web.php'));
+
+                            Route::middleware('admin')
+                                ->prefix('admin')
+                                ->group(base_path('routes/admin.php'));
+                        });
+                    }
+
+Q73. How to generate PDF in laravel with laravel-dompdf library?
+A: 1. composer require barryvdh/laravel-dompdf
+   2. Open the config/app.php file and add the following lines to the providers array:
+          'providers' => [
+                Barryvdh\DomPDF\ServiceProvider::class,
+            ],
+
+            'aliases' => [
+                'PDF' => Barryvdh\DomPDF\Facade::class,
+            ],
+
+   3. Create Route: Route::get('/generate-pdf', 'PdfController@generatePdf');
+   4. php artisan make:controller PdfController
+   5. Modify Controller:
+        use PDF;
+
+        class PdfController extends Controller
+        {
+            public function generatePdf()
+            {
+                $data = [
+                    'title' => 'Sample PDF',
+                    'content' => 'This is a sample PDF generated from Laravel.'
+                ];
+
+                $pdf = PDF::loadView('pdf.sample', $data);
+
+                return $pdf->download('sample.pdf');
+            }
+        }
+    6. Create a Blade View:
+           <!DOCTYPE html>
+            <html>
+            <head>
+                <title>{{ $title }}</title>
+            </head>
+            <body>
+                <h1>{{ $title }}</h1>
+                <p>{{ $content }}</p>
+            </body>
+            </html>
+
+Q74. How to generate excel in laravel using "maatwebsite/excel" package?
+A: 1. composer require maatwebsite/excel
+   2. Open the config/app.php file and add the following line to the providers array:
+            'providers' => [
+                    Maatwebsite\Excel\ExcelServiceProvider::class,
+                ],
+            'aliases' => [
+                    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+                ],
+    3. Route::get('/generate-excel', 'ExcelController@generateExcel');
+    4. php artisan make:controller ExcelController
+    5. Modify Excel Controller:
+                use Excel;
+                use App\Exports\SampleExport;
+
+                class ExcelController extends Controller
+                {
+                    public function generateExcel()
+                    {
+                        return Excel::download(new SampleExport, 'sample.xlsx');
+                    }
+                }
+
+     6. php artisan make:export SampleExport
+     7. Modify SampleExport.php:
+                        use Maatwebsite\Excel\Concerns\FromCollection;
+                        use Illuminate\Support\Collection;
+
+                        class SampleExport implements FromCollection
+                        {
+                            public function collection()
+                            {
+                                return collect([
+                                    ['Title', 'Content'],
+                                    ['Sample Excel', 'This is a sample Excel file generated from Laravel.'],
+                                ]);
+                            }
+                        }
+
+    Now when we will hit the route, i will down the excel with data given in SampleExport.php
+
+Q75. What is Maintainance Mode in Laravel?
+A: Maintenance mode in Laravel is a feature that allows you to put your application into a maintenance state temporarily. 
+   When your application is in maintenance mode, it displays a maintenance page to users.
+   Enabling Maintenance Mode: php artisan down
+   We can direct view 503 blade page, 503 is the maintenance mode http method.
+   
+Q76. How to make custom artisan command in Laravel?
+A: 1. Generate a New Command: php artisan make:command YourCommandName
+          This will create a new PHP file in the app/Console/Commands directory, named YourCommandName.php.
+   2. Define the Command Logic in new genrated file:
+                namespace App\Console\Commands;
+
+                use Illuminate\Console\Command;
+
+                class YourCommandName extends Command
+                {
+                    protected $signature = 'your:command'; // The command signature
+
+                    protected $description = 'Description of your command'; // Command description
+
+                    public function __construct()
+                    {
+                        parent::__construct();
+                    }
+
+                    public function handle()
+                    {
+                        $this->info('This is your custom command output.');
+                    }
+                }
+   3. In Laravel, you need to register your custom command in the app/Console/Kernel.php file. Open this file and add your command to the $commands property's array:
+              protected $commands = [
+                        \App\Console\Commands\YourCommandName::class,
+                    ];
+   4. Define custom artisan command:
+               php artisan your:command
+
+Q77. How to pass value in custom artisan command to run query?
+A: 1. Modify signature:
+           protected $signature = 'your:command {argument1} {--option1=default}';
+   2. Modify Genrated file:
+     public function handle()
+        {
+            $argument1 = $this->argument('argument1');
+            $option1 = $this->option('option1');
+
+            $results = \DB::table('your_table_name')
+                ->where('column_name', '=', $argument1)
+                ->orWhere('another_column', '=', $option1)
+                ->get();
+
+            foreach ($results as $result) {
+                $this->info("Result: " . json_encode($result));
+            }
+        }
+    2. php artisan your:command Kawal --option1=Kawaljeet
+
+Q78. How can i allow Admin to access routes if the site is in maintenance mode?
+A:If the website is in maintenance mode and an admin user gets authenticated successfully.
+  It will allow the admin to access website and it's screens if the website is in maintenance mode, because the middleware allows users with admin role to bypass the maintenance mode check and continue to access the site.  
+  1. Make a new Middleware and modify code like this:
+                use Illuminate\Support\Facades\Auth;
+
+                public function handle($request, Closure $next)
+                {
+                    if (app()->isDownForMaintenance()) {
+                        // Check if the user is authenticated and has the 'Admin' role
+                        if (Auth::check() && Auth::user()->role == 'Admin') {
+                            return $next($request);
+                        } else {
+                            abort(503);
+                        }
+                    }
+
+                    return $next($request);
+                }
+    2. Add this is web middleware or group route middleware.
+ 
+Q79. What is Passport and How to install it?
+A: Passport is a package in Laravel that provides a complete OAuth2 authentication.
+   It Provides OAuth2 authentication, API Authentication, Token Management, Access Token Encryption etc.
+   OAuth2 Authentication: Passport allows you to implement OAuth2 authentication in your Laravel applications. OAuth2 is a widely used protocol for secure, token-based authentication and authorization.
+   No user can hit api without passport token and laravel will automatically check token using passport middleware and identify api user.
+
+   To Install it:
+        1. Install Laravel Passport: composer require laravel/passport
+        2. php artisan migrate
+        3. php artisan passport:install
+        4. Configure Passport in AuthServiceProvider:
+                   Add this line:  Passport::routes(); in boot method.
+        5. User Model Updates:
+                    use Laravel\Passport\HasApiTokens;
+
+                    class User extends Authenticatable
+                    {
+                        use HasApiTokens, Notifiable;
+                        
+                        // ...
+                    }
+        6. Configure Auth Guard:
+                   Open config/auth.php and make sure the api guard uses the Passport driver:
+                             'guards' => [
+                                    'web' => [
+                                        'driver' => 'session',
+                                        'provider' => 'users',
+                                    ],
+                                    'api' => [
+                                        'driver' => 'passport',
+                                        'provider' => 'users',
+                                    ],
+                                ],
+ 
+ Q80. How to genrate token using passport?
+ A: use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Auth;
+
+    class AuthController extends Controller
+    {
+        public function login(Request $request)
+        {
+            $credentials = $request->only('email', 'password');
+
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+                $token = $user->createToken('MyApp')->accessToken;
+
+                return response()->json(['token' => $token], 200);
+            }
+
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    }
+
+Q81. How to make profile API using passport?
+A: 1. Route::middleware('auth:api')->group(function () {
+            Route::get('/user/profile', 'UserProfileController@show');
+        });
+   2. Modify controller:
+                use Illuminate\Http\Request;
+                use Illuminate\Support\Facades\Auth;
+
+                class UserProfileController extends Controller
+                {
+                    public function show()
+                    {
+                        $user = Auth::user();
+                        return response()->json(['user' => $user], 200);
+                    }
+                }
+
+Q82. What is the use of Auth() in Laravel?
+A: It allows users to register and authenticate with your application.
+   While handling an incoming request, you may access the authenticated user via the Auth facade's user method.
+   Example:
+      1. Auth::user() // Retrieve the currently authenticated user...
+      2. Auth::id() // Retrieve the currently authenticated user's ID...
+      3. Auth::check() This method will return true if the user is authenticated
+      4. Auth::attempt(['name' => $name, 'password' => $password])     // Authentication was successful...
+      5. Auth Guard:
+         You may specify which guard instance you would like to utilize when authenticating the user.
+         
+         'guards' => [
+                'web' => [
+                    'driver' => 'session',
+                    'provider' => 'users',
+                ],
+                'api' => [
+                    'driver' => 'token',
+                    'provider' => 'users',
+                ],
+            ],
+
+          // Using the 'web' guard
+            if (Auth::guard('web')->attempt($credentials)) {
+                // Authentication successful
+            }
+
+            // Using the 'api' guard
+            if (Auth::guard('api')->attempt($credentials)) {
+                // Authentication successful
+            }
+       6. Auth::login : 
+                    use Illuminate\Support\Facades\Auth;
+ 
+                    // Retrieve a user instance (e.g., by their ID)
+                    $user = User::find(1);
+
+                    // Log in the user
+                    Auth::login($user);
+
+                    // After this, $user will be logged in and authenticated
+          After calling Auth::login(), the specified user will be logged in, and Laravel will associate the user's information with the current session.
+       7. Auth::loginUsingId(1); //login the user using login id.
+       8. Auth::logout();
+
+Q83. What are Collections in Laravel?
+A: In Laravel, a collection is an object-oriented, fluent, and convenient way to work with arrays of data.
+    Laravel collections provide a wide range of methods to perform operations on arrays, making it easier and more expressive to manipulate data.
+
+Q84. What is Laravel Sanctum in Laravel?
+A: Laravel Sanctum is a first-party Laravel package designed to make API authentication and token management.
+   It provides a lightweight and easy-to-use solution for securing your Laravel applications, particularly when building APIs.
+   To use use it:
+         1. Install Laravel Sanctum via Composer: composer require laravel/sanctum
+         2. Publish the Sanctum configuration and migration files: php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+         3. php artisan migrate
+         4. Configure Guard:
+                      'guards' => [
+                            'web' => [
+                                'driver' => 'session',
+                                'provider' => 'users',
+                            ],
+
+                            'api' => [
+                                'driver' => 'sanctum', // Use the 'sanctum' driver
+                                'provider' => 'users',
+                                'hash' => false,
+                            ],
+                        ],
+           5. Create API Tokens:
+                         $user = User::find(1); // Replace with the actual user
+                         $token = $user->createToken('token-name')->plainTextToken;
+
+           6. Protect Routes:
+                           Route::middleware('auth:sanctum')->get('/api/protected-route', function () {
+                                // This route is protected by Sanctum
+                            });
+
+Q85. What is Laravel Scheduler and how to use it?
+A: The Laravel Scheduler is a built-in feature that allows you to schedule the execution of various tasks or commands to run automatically at specified intervals.
+   for example:
+       Modify schedule method in the kernal.php file in console folder in http like this:
+               protected $timezone = 'India/Kolkata';
+               protected function schedule(Schedule $schedule)
+                    {
+                        $schedule->command('your-command-name')->daily();
+                    }
+    Laravel Scheduler methods:
+       1. daily()
+       2. dailyAt($time)
+       3. twiceDaily($first, $second)
+       4. hourly()
+       5. hourlyAt($minute) like 30
+       6. everyFiveMinutes()
+       7. everyTenMinutes()
+       8. weekly()
+       9. weeklyOn($day, $time)
+       10. monthly()
+       11. monthlyOn($day, $time)
+       12. quarterly()
+       13. yearly()
+       14. between($start, $end) Specify a custom time range for running the task. For example, you can use between('08:00', '17:00') to run a task between 8:00 AM and 5:00 PM.
+       
+Q86. What is JWT Authentication?
+A:  JWT (JSON Web Token) authentication in Laravel is a popular method of implementing authentication for web applications. 
+    It allows you to secure your application's APIs by issuing and verifying tokens.
+    These tokens are usually sent with each API request to verify the identity of the user or client making the request. 
+
+Q87. How to use JWT Auth in Laravel?
+A: 1. Install the package via Composer: composer require tymon/jwt-auth
+   2. Modify config/app.php:
+          'providers' => [
+                Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+            ]
+   3. Publish the config: php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+   4. Modify config/auth.php:
+              'defaults' => [
+                    'guard' => 'api',
+                    'passwords' => 'users',
+                ],
+                'guards' => [
+                    'api' => [
+                        'driver' => 'jwt',
+                        'provider' => 'users',
+                    ],
+                ],
+   5. php artisan jwt:secret
+   6. Modify User Model:
+               use Tymon\JWTAuth\Contracts\JWTSubject;
+               class User extends Authenticatable implements JWTSubject
+                {
+                    use Notifiable;
+
+                    // Rest omitted for brevity
+
+                    /**
+                    * Get the identifier that will be stored in the subject claim of the JWT.
+                    *
+                    * @return mixed
+                    */
+                    public function getJWTIdentifier()
+                    {
+                        return $this->getKey();
+                    }
+
+                    /**
+                    * Return a key value array, containing any custom claims to be added to the JWT.
+                    *
+                    * @return array
+                    */
+                    public function getJWTCustomClaims()
+                    {
+                        return [];
+                    }
+                }
+    7. Now use Auth as per given in https://jwt-auth.readthedocs.io/en/develop/quick-start/
+       
+Q88. What is Laravel Request Life Cycle?
+A: 1. public/index.php:
+       The entry point for all requests to a Laravel application is the public/index.php file.
+       The index.php file doesn't contain much code. Rather, it is a starting point for loading the rest of the framework.
+       The first action taken by Laravel itself is to create an instance of the application / service container.
+   2. Routing:
+       After initialization, the request is routed to the appropriate route defined in your application's route files.
+   3. Middleware:
+       The request is then passed through the HTTP kernel middleware.
+       Middleware are classes that can perform tasks like authentication, logging, request modification, etc.
+       Thus, it is used to filter incoming request.
+   4. Controller Handling:
+       Once the request passes through middleware, it reaches the controller action.
+       The controller contains the logic for handling the request.
+   5. Response and Termination:
+       After processing the request, the controller returns a response.
+       The response is typically generated by Laravel's response classes and sent back to client.
+
+Q89. What is Dependency Injections in Laravel?
+A: Dependency injection is a programming technique that makes a class independent of its dependencies.
+   In this a class or its methods depends upon any other dependency class.
+   Dependency Injection is a design pattern where the dependencies of a class or module are injected from the outside rather than being created within the class.
+   In laravel, dependency injection is Maintain by service container.
+   Example:
+        class Logger {
+            public function log($message) {
+                // Log the message.
+                echo $message;
+            }
+        }
+
+        class UserManager {
+            private $logger;
+
+            public function __construct(Logger $logger) {
+                $this->logger = $logger;
+            }
+
+            public function createUser($username) {
+                // Create a user.
+                // Log the user creation.
+                $this->logger->log("User $username created.");
+            }
+        }
+
+
+        $logger = new Logger();
+        $userManager = new UserManager($logger);
+        $userManager->createUser('Kawal');
+
+Q90. What is Service Container in Laravel?
+A: Service Container is a dependency injection container.
+   It has Ability to manage class dependencies on object creation.
+   It is used for managing dependencies required by various parts of an application. 
+   In Laravel, you can bind classes and interfaces in the service container by using the bind method.
+   To bind, modify AppProvider:
+          public function register()
+                {
+                    $this->app->bind(SomeClass::class, function ($app) {
+                        return new SomeClass($app->make('SomeDependency'));
+                    });
+                }
+
+Q91. What is Service Provider in laravel?
+A:  Service providers are the central place to configure your application.
+    If you open the config/app.php file included with Laravel, you will see a providers array. These are all of the service provider classes that will be loaded for your application.
+    A service provider is primarily responsible for registering various services.
+    By registering services, a service provider makes them available for use throughout your application.
+    Most service providers contain a register and a boot method.
+    Within the register method, you should only bind things into the service container.
+    Boot method is called after all other service providers have been registered or it is called after register method.
+
+Q92. What is the difference between service provider and service container?
+A: Service container is the place where our application bindings are stored. And the service providers are the classes where we services into service container.
+   The Service Container is primarily responsible for managing and resolving dependencies and facilitating dependency injection.
+   The Service Provider is responsible for registering and configuring various services within the application, making them available for use. 
+
+Q93. How to make custom service provider?
+A: 1. Create the Service Provider: php artisan make:provider CustomServiceProvider
+   2. Register Your Service:
+            namespace App\Providers;
+
+            use Illuminate\Support\ServiceProvider;
+
+            class CustomServiceProvider extends ServiceProvider
+            {
+                /**
+                * Register any application services.
+                *
+                * @return void
+                */
+                public function register()
+                {
+                    $this->app->bind('custom-service', function ($app) {
+                        return new \App\Services\CustomService();
+                    });
+                }
+            }
+   3. Register Your Service Provider:
+              'providers' => [
+                    App\Providers\CustomServiceProvider::class,
+                ],
+   4. To use it:
+                $customService = app('custom-service');
+                // Or 
+                public function someMethod(\App\Services\CustomService $customService)
+                {
+                    // Use $customService here
+                }
+
+Q94. Difference between bind and singleton?
+A: The main purpose of the bind and singleton methods in Laravel's service container is to control how instances of classes or implementations are resolved and managed within the application. 
+   Bind:
+     When we use bind method, laravel created new instance on it's every call.
+   Singleton:
+     It is used when you want simple shared instance.
+   Bind Method example:
+        // Binding a class to another class using the `bind` method
+        app()->bind(MyConcreteImplementation::class, MyOtherConcreteImplementation::class);
+
+        // Resolving the bound instance
+        $instance1 = app(MyConcreteImplementation::class); // Creates a new instance of MyOtherConcreteImplementation
+        $instance2 = app(MyConcreteImplementation::class); // Creates another new instance of MyOtherConcreteImplementation
+   Singleton method Example:
+        // Binding a class to another class as a singleton using the `singleton` method
+        app()->singleton(MyConcreteImplementation::class, MyOtherConcreteImplementation::class);
+
+        // Resolving the bound instance
+        $instance1 = app(MyConcreteImplementation::class); // Creates a new instance of MyOtherConcreteImplementation and stores it
+        $instance2 = app(MyConcreteImplementation::class); // Returns the same instance as $instance1
+
+Q95. What is Facades in Laravel?
+A: Facades refers to set of static method provided by laravel core components and packages.
+   Laravel facades provide a static-like and user-friendly way to access various services, such as the database, cache, or session
+   Thus, Facades provide a static interface to classes that are available in the application’s service container.
+   Example:
+       use Illuminate\Support\Facades\DB;
+       $users = DB::table('users')->get();
+
+Q96. What is Facade in Laravel?
+A:  It refers to implementation of the facade design pattern.
+    It's the simplified interface provided to access a particular set of functionalities or components within a system.
+    We can create our custom facades:
+       1. Bind a service normally in service container and register it in register method of service provider class.
+          like:
+              <?php
+                namespace App\Isop;
+                class Isop
+                {
+                    public function greet()
+                    {
+                        echo "Hello, Custom Facade";
+                    }
+                }
+       2. Create a class in App\Isop:
+                    namespace App\Isop;
+                    use Illuminate\Support\Facades\Facade;
+                    class IsopFacade extends Facade
+                    {
+                        protected static function getFacadeAccessor()
+                        {
+                            return 'isop’; //return of name of recently registered service
+                        }
+                    }
+       3. Now we register the class IsopFacade in config/app.php as aliases:
+           'Isop'   =>  App\Isop\IsopFacade::class //add second step class
+       4. Now use it:
+                 Isop::greet();
+
+Q97. What are jobs and queue in Laravel?
+A: Jobs:
+       Jobs in Laravel refers to a unit of work that needs to be performed asynchronously.
+       It represents a single task or piece of code that should run separately from the main application logic.
+       Jobs can be used for tasks like sending emails, processing uploaded files, generating reports, and more.
+       Example:
+          dispatch(new SendEmailJob($user));
+   Queue:
+       Queue in Laravel is a mechanism for managing and executing jobs asynchronously.
+       It allows you to push jobs into a queue and then process them in the background by one or more worker processes.
+
+Q98. How to use Jobs and Queue in Laravel?
+A: 1. Modify env file: QUEUE_CONNECTION=redis
+   2. Create a job: php artisan make:job SendEmailJob
+      It will generate file in app/Jobs/SendEmailJob.php
+
+      php artisan queue:table
+      This command will generate a migration file for the jobs table. 
+      
+      php artisan migrate
+      This command will migrate table.
+   3. Define the job logic in handle method:
+              public function handle()
+                {
+                    // Logic to send the email
+                }
+   4. dispatch the job:
+           use App\Jobs\SendEmailJob;
+
+            dispatch(new SendEmailJob($user));
+   5. Start Queue Workers:
+               php artisan queue:work
+
+Q99. What are Events and Listeners in Laravel?
+A: Events:
+     Events are essentially named triggers that represent something that has happened in your application, such as a user registering, an order being placed.
+     An event can be fired using the event function or the Event facade.
+     Events are defined as classes in Laravel, typically located in the app/Events directory. 
+     Example:
+         event(new UserRegistered($user));
+   Listeners:
+     Listeners are responsible for handling events when they are fired.
+     Listeners are also defined as classes in Laravel, typically located in the app/Listeners directory. 
+     In Listener class we add logic in handle method which gets executed when particular event is fired.
+
+Q100. How to use Event and Listener in Laravel?
+A: 1. Create an event: php artisan make:event UserRegistered
+   2. In the generated event class (e.g., app/Events/UserRegistered.php), you can define any data or properties that should be associated with the event. For instance:
+            public $user;
+
+            public function __construct(User $user)
+            {
+                $this->user = $user;
+            }
+   3. Create a Listener:php artisan make:listener SendWelcomeEmail
+   4. In the generated listener class (e.g., app/Listeners/SendWelcomeEmail.php), define the logic to be executed when the event is fired:
+            public function handle(UserRegistered $event)
+                {
+                    // Logic to send a welcome email to the registered user
+                }
+   5. Register the Event and Listener:
+         protected $listen = [
+                UserRegistered::class => [
+                    SendWelcomeEmail::class,
+                    // Add more listeners here if needed
+                ],
+            ];
+   6. dispatch the event : event(new UserRegistered($user));
+
+Q101. What is the laravel function for hitting command line?
+A: Artisan::call
+
+Q102. What is macro in Laravel?
+A: Macro refers to a specific custom method or functionality that you add to an existing class or core component in Laravel.
+   Macros are typically added to core Laravel classes, like Eloquent models, collections, query builders, and the router, using the macro method.
+   Example (To use macro):
+       1. Modify boot method of AppServiceProvider:
+                    use Illuminate\Database\Eloquent\Builder;
+                    public function boot()
+                        {
+                            Builder::macro('inactive', function () {
+                                return $this->where('status', 'inactive');
+                            });
+                        }
+       2. Use the macro:
+             $inactiveStudents = Student::inactive()->get();
+
+Q103. What is macroable in Laravel?
+A: Macroable is a trait provided by Laravel that you can use in your own classes to enable them to have custom macros added to their instances.
+   Example: (To use this):
+     1. Make your own class:
+            use Illuminate\Support\Traits\Macroable;
+
+            class MyCustomClass
+            {
+                use Macroable;
+
+                public function performAction()
+                {
+                    // ... Your class's default behavior
+                }
+            }
+    2. Adding a custom macro to MyCustomClass instances:
+            MyCustomClass::macro('customMethod', function () {
+                return 'Custom method executed!';
+            });
+    3. Usage:
+            $instance = new MyCustomClass();
+            $result = $instance->customMethod();      
+
+Q104. What is macro:mixin?
+A: A mixin in Laravel typically refers to a reusable piece of code.
+   Example:
+       1. Make a class:
+             class GreetingMixin
+                {
+                    public function greet()
+                    {
+                        return function (?string $greeting = null) {
+                            return $greeting 
+                            ? sprintf('%s %s%s', $greeting, $this->name, PHP_EOL)
+                            : $this->sayHello();
+                        };
+                    }
+
+                    public function whatTimeIsIt()
+                    {
+                        return function () {
+                            return sprintf(
+                                'Hey, it is %s',
+                                (new DateTimeImmutable())->format('H:i:s')
+                            );
+                        };
+                    }
+                }
+       2. Add this line in AppServiceProvider register method:
+                Greeting::mixin(new GreetingMixin());
+       3. $greeting = new Greeting('Anik');
+            echo $greeting->greet('Good evening'); // "Good evening Anik"
+
+Q105. Explain the concept of Laravel Mixins. When and why would you use Mixins in your Laravel application? Provide an example.
+A: Laravel Mixins refers to adding reusable functionality and methods to multiple classes.
+   It increases Flexibility of our website.
+   This concept is achieved using PHP's Traits, which are a way to reuse methods in multiple classes.
+   Example:
+        1. Define trait:
+                 // Define a trait (mixin) that calculates age
+                    trait CalculateAgeMixin
+                    {
+                        public function calculateAge()
+                        {
+                            return now()->diffInYears($this->birthdate);
+                        }
+                    }
+        2. use Illuminate\Database\Eloquent\Model;
+            class User extends Model
+            {
+                use CalculateAgeMixin;
+                
+                // Other model properties and methods
+            }
+
+Q106. What is lazy loading in Laravel?
+A: Lazy loading refers to strategy where related data is fetched from the database only when it is requested or accessed in the code.
+   It helps to reduce database queries and improves performance.
+   Lazy loading is the default behavior in model.
+   Example:
+        $user = User::find(1);  // Only loads the user data from the 'users' table
+        $posts = $user->posts;  // Loads the user's posts from the 'posts' table when accessed
+        foreach ($users as $user) {
+            foreach ($user->posts as $post) {
+                echo $post->title;
+            }
+        }
+
+Q107. What is Eager loading in Laravel?
+A:  Eager loading is a strategy where you fetch both the main model and its related data in a single query.
+    Example:
+       $users = User::with('posts')->get();  // Loads users along with their posts in a single query
+              OR 
+       $users = User::with(['posts', 'comment'])
+        foreach ($users as $user) {
+            // Accessing posts here does not trigger additional queries; the data is already loaded
+            $posts = $user->posts;
+        }
+
+Q108. What is the use of composer.json file?
+A: It is used to manage the project's dependencies and autoload classes using Composer.
+   It specefies the dependencies require for our laravel project.
+   On typically running of commands like composer install or composer update in the terminal, it reads the composer.json file, resolves dependencies, and generates the autoloader and executes defined scripts. 
+
+Q109. What is the use of composer.lock file?
+A: It is used to look specefic versions of various dependencies.
+   When you run composer install, Composer uses the composer.lock file to resolve dependencies. It doesn't need to recalculate which versions of packages to install because it already knows which versions were previously installed. 
+   It helps to share project as you can gurantee that everyone is using the same dependencies.
+
+Q110. What is the use of package.json file in laravel?
+A: The package.json file specifies the front-end dependencies required for your Laravel project.
+   Same as above on typically running composer update or composer install
+
+Q111. How to generate a request in Laravel?
+A: You can generate a request class using the make:request Artisan command. 
+   Request classes are used to handle incoming HTTP requests, validate data, and perform any necessary data manipulation.
+   Example:
+       1. Generate class : php artisan make:request RegisterUserRequest
+       2. Modify generate file as per your request validation :
+                    namespace App\Http\Requests;
+
+                    use Illuminate\Foundation\Http\FormRequest;
+
+                    class RegisterUserRequest extends FormRequest
+                    {
+                        /**
+                        * Determine if the user is authorized to make this request.
+                        *
+                        * @return bool
+                        */
+                        public function authorize()
+                        {
+                            // Define authorization logic here, e.g., check if the user is authenticated.
+                            return true;
+                        }
+
+                        /**
+                        * Get the validation rules that apply to the request.
+                        *
+                        * @return array
+                        */
+                        public function rules()
+                        {
+                            // Define validation rules for your request data.
+                            return [
+                                'name' => 'required|string|max:255',
+                                'email' => 'required|string|email|max:255|unique:users',
+                                'password' => 'required|string|min:8|confirmed',
+                            ];
+                        }
+                    }
+        3.  use App\Http\Requests\RegisterUserRequest;
+
+            public function register(RegisterUserRequest $request)
+            {
+                // Your controller logic to handle the validated request.
+            }
+
+Q112. How to share a value to all blade templates?
+A: Add this line in your boot method of any service provider or app service provider:
+      View::share('siteName', 'Your Website Name');
+   You can also share array, object or any datatype      
+
+Q113. What do you mean by bundles?
+A: In Laravel, bundles are referred to as packages. 
+   These packages are used to increase the functionality of Laravel. 
+   A package can have views, configuration, migrations, routes.
+
+Q114. What is Query log in laravel?
+A: Query log is a feature that allows you to log and record all the database queries that are executed.
+   This is also useful for debugging.
+   Example:
+       use Illuminate\Support\Facades\DB;
+
+        public function someMethod()
+        {
+            // Enable the query log
+            DB::enableQueryLog();
+
+            // Your code that executes database queries
+            $results = DB::table('your_table')->where('column', '=', 'value')->get();
+
+            // Retrieve and log the query log
+            $queries = DB::getQueryLog();
+            
+            // Log the queries to Laravel's log file
+            Log::debug($queries);
+
+            // Return the results or perform other actions
+            return $results;
+        }
+   After executing this code, you will see the new log in storage > logs> laravel.log
+
+Q115. What is Hashing in Laravel?
+A: Hashing in Laravel refers to the process of securely encrypting and storing sensitive data, such as passwords, in a way that makes it difficult to reverse the original data.
+   Example:
+       1. Hashing pass:
+                 $plainTextPassword = 'user123';
+                 $hashedPassword = Hash::make($plainTextPassword);
+       2. check pass:
+                 //returns true or false
+                 Hash::check($userEnteredPassword, $storedHashedPassword)
+
+Q116. What is Eloquent API Resource?
+A: Eloquent API Resource are a powerful way to transform your Eloquent models into structured format for use in API responses.
+   This allows us that how our data should be presented when it returned as JSON.
+   This helps to keep the api weel-organized.
+   Example:
+       1. Create a Resource Class: php artisan make:resource PostResource
+       2. Define the Transformation:
+                   In the generated file format the data as requirement like:
+                                namespace App\Http\Resources;
+
+                                use Illuminate\Http\Resources\Json\JsonResource;
+
+                                class PostResource extends JsonResource
+                                {
+                                    public function toArray($request)
+                                    {
+                                        return [
+                                            'id' => $this->id,
+                                            'title' => $this->title,
+                                            'body' => $this->body,
+                                            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+                                            'user' => new UserResource($this->user), // You can include nested resources if needed
+                                        ];
+                                    }
+                                }
+       3. Use the Resource in Your Controller:
+                    $post = Post::findOrFail($id);
+                    return new PostResource($post);
+
+Q117. What is artisan in Laravel?
+A: Artisan is the Command line (CLI) included with our framework.
+   It provides set of helpful commands for peforming common tasks while developing laravel application.
+   Some Common tasks are: Database Migration, Database Seeding, Running tasks, Clearing Cache etc.
+
+Q118. What is 'make:' prefix in laravel CLI?
+A: The 'make' prefix is used for creating new files.
+   The command is used to generate Eloquent model class, controller, migration, middleware, seeder etc.
+
+Q119. Explain Logging in Laravel?
+A: Logging in Laravel is the process of recording and storing information about events and activities that occur in your application during its runtime. 
+   It helps developers to monitor, debug and troubleshoot issues.
+   Example:
+       1. Types of Logs:
+                Warning log:
+                   Log::warning('This is a warning message.');
+
+                Info log:
+                   Log::info('User registered: ' . $user->name);
+
+                Debug log:
+                   Log::debug('Debugging information: ' . $data); 
+                
+                Security log:
+                   \Log::security('Unauthorized access to restricted resource: ' . $resource);
+                
+      2. Create Custom Log:
+                // Create a custom log channel in config/logging.php
+                'custom' => [
+                    'driver' => 'single',
+                    'path' => storage_path('logs/custom.log'),
+                    'level' => 'debug',
+                ]
+
+                // Use the custom log channel
+                \Log::channel('custom')->info('Custom log message.');
+
+Q120. What is IP address and how to access it in laravel?
+A: An IP address is a unique lable assigned to each device connected to the network.
+   It is used to uniquely identify a device on a network.
+   To access it in laravel:
+           public function getUserDetails(Request $request)
+                {
+                    // Get the user's IP address
+                    $userIp = $request->ip();
+                    
+                    // Get additional details about the user
+                    $userAgent = $request->userAgent();
+                    $userHost = $request->getHost();
+                    $userPort = $request->getPort();
+                    
+                    // Create an array to store the user details
+                    $userDetails = [
+                        'ip' => $userIp,
+                        'user_agent' => $userAgent,
+                        'host' => $userHost,
+                        'port' => $userPort,
+                    ];
+                    
+                    // Return the user details as a JSON response or use them as needed
+                    return response()->json($userDetails);
+                }
+
+Q121. What is Socialate login in laravel and how to integrate?
+A: Laravel Socialate is Package which allows us to inetgrate various social providers like google, twitter, facebook, linkedin etc.
+   To inetgrate:
+       1. Install Laravel Socialate: composer require laravel/socialite
+       2. Modify env file:
+                GOOGLE_CLIENT_ID=your-google-client-id
+                GOOGLE_CLIENT_SECRET=your-google-client-secret
+                GOOGLE_REDIRECT=env('APP_URL')
+       3. Modify config/services.php:
+               'google' => [
+                'client_id' => env('GOOGLE_CLIENT_ID'),
+                'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+                'redirect' => env('GOOGLE_REDIRECT') . '/auth/google/callback',
+            ],
+
+       4. Create Routes:
+                Route::get('auth/google', 'Auth\LoginController@redirectToProvider');
+                Route::get('auth/google/callback', 'Auth\LoginController@handleProviderCallback'); 
+       5. Create Controller:
+                use Laravel\Socialite\Facades\Socialite;
+
+                public function redirectToProvider($provider)
+                {
+                    return Socialite::driver($provider)->redirect();
+                }
+
+                public function handleProviderCallback($provider)
+                {
+                    $user = Socialite::driver($provider)->user();
+
+                    // Use $user data to authenticate or create a new user account
+                    // Example: Check if the user exists and log them in
+
+                    auth()->login($user);
+
+                    return redirect('/home');
+                }
+        
+Q122. How to create custom config file in laravel?
+A: 1. Create a file with namy name like 'custom.php' in config folder.
+   2. Set the custom configuration setting in newly created file (custom.php):
+             <?php
+
+                return [
+                    'api_key' => env('API_KEY', ''),
+                    'api_secret' => env('API_SECRET', ''),
+                    'database' => [
+                        'connection' => 'mysql',
+                        'host' => 'localhost',
+                     ],
+                ];
+   3. To access the value: Config::get('custom.api_key')
+      To put the value or modify the value :: Config::set('custom.api_key','test_key')
+      Config::has('config_file.key')
+      Config::get('custom.database.host')
+      Config::reset('config_file.key');
+
+Q123. what is env variable and how it is customized and used?
+A: env variables are those variables that can be used to customize the behavior of an application based on the environment it is running in. 
+   access value env('APP_NAME);
+   modify value dynamically putenv('VARIABLE_NAME=new_value');
+
+Q124. What is Compact function in Laravel?
+A: The compact function takes these variable names and creates an associative array where the keys are the variable names and the values are the values.
+   Example 1:
+            $name = 'John';
+            $age = 30;
+
+            $data = compact('name', 'age');
+
+            // $data is now ['name' => 'John', 'age' => 30]
+   Example 2:
+         public function showUserProfile()
+            {
+                $user = User::find(1);
+                $posts = $user->posts;
+
+                return view('user.profile', compact('user', 'posts'));
+            }
+
+Q125. What is class autoloading in laravel?
+A: Class autoloading is a mechanism that allows you to load classes in your application automatically without the need of require and include.
+   Laravel uses Composer, a PHP dependency manager, to achieve class autoloading efficiently.
+   Example:
+         // Without autoloading, you might need to manually include the class file.
+        // require_once('app/MyClass.php');
+        $myInstance = new App\MyClass();
+
+        // With autoloading, Laravel automatically loads the class file for you.
+        $myInstance = new App\MyClass();
+    use keyword is used to import classes
+    namespace keyword allows same name classes to be used performing different actions.
+
+Q126. How to check whether the request is ajax or not?
+A: public function saveData(Request $request)
+        {
+            if($request->ajax()){
+                return "Request is Ajax Type";
+            }
+            return "Request is Http type";
+        }
+
+Q127. How to use caching to improve perfomace of laravel application and mention various different caching mechanisms?
+A: Retriving data from cache store are typically faster to access than fetching the data from database or any external API.
+   Example:
+       1. Using Cache Helper:
+                // Store data in the cache for 10 minutes
+                cache()->put('key', 'value', 10);
+
+                // Retrieve data from the cache
+                $data = cache()->get('key');
+       2. Callback Cache:
+               $data = cache()->remember('key', 100, function () {
+                    // Code to generate and return data
+                    return 134343;
+                });
+       3. Forgot Cache value:
+              cache()->forget('key'); //clear particular cache.
+              cache()->flush(); //clear all cache
+       4. Store Cache value without expiration:
+              cache()->forever('key', 'value');
+
+Q128. What is Serialization in Laravel?
+A: serialization refers to the process of converting complex data, such as arrays or objects, into a format that can be easily stored, transmitted, or deserialized later. 
+   Example:
+       $data = ['key' => 'value'];
+
+        // Serialize the data
+        $serializedData = serialize($data);
+
+        // Unserialize the data
+        $restoredData = unserialize($serializedData);
+
+Q129. How to send mail in laravel?
+A: 1. Configure Mail Setting in ENV file.
+   2. run php artisan make:mail SendMail.
+   3. Modify Created mail as per our wish what we want to send.
+   4. Send Mail : 
+        use Illuminate\Support\Facades\Mail;
+        use App\Mail\MyEmail;
+
+        // Sending the email
+        Mail::to('recipient@example.com')->send(new MyEmail());
+
+Q130. What is App Key and for what is used for?
+A: In Laravel, the APP_KEY is a configuration setting used for various security and encryption purposes within your application. 
+   Example:
+     $encryptedData = encrypt('sensitive_data');
+     $decryptedData = decrypt($encryptedData);
+   The APP_KEY is used to generate secure tokens, such as CSRF tokens.
+   Laravel uses the APP_KEY to secure session data.
+
+Q131. What is the use of the bootstrap directory?
+A: The bootstrap directory in Laravel is essential for setting up the framework, handling autoloading, caching configuration, and bootstrapping the application.
+   It contains several important files.
+
+Q132. How to upload file in Laravel?
+A: 1. mkdir -p storage/uploads    
+   2.  public function upload(Request $request)
+        {
+            // Validate the uploaded file
+            $request->validate([
+                'file' => 'required|file|max:2048', // 2MB maximum file size (adjust as needed)
+            ]);
+
+            // Store the uploaded file in the 'uploads' directory
+            $uploadedFile = $request->file('file');
+            $filename = time() . '_' . $uploadedFile->getClientOriginalName();
+            $uploadedFile->storeAs('uploads', $filename);
+
+            // Optionally, you can save file details to a database
+
+            // Redirect back with a success message
+            return back()->with('success', 'File uploaded successfully.');
+        }
+   3. To view Image:
+          <img src="{{ route('viewImage', ['filename' => 'your_image.jpg']) }}" alt="Your Image">
+
+Q133. What is Jetstream package in Laravel? and how to install and use it?
+A: This package provies features related to Authentication, user management and front-end development.
+   Jetstream provies high degree of customization.
+   It we are working in large project than Jetstream is the best option.
+   To Install it:
+      1. php artisan vendor:publish --tag=jetstream-views
+      2. php artisan jetstream:install livewire
+      3. php artisan migrate
+      4. npm install && npm run dev
+      5. php artisan vendor:publish --tag=jetstream-views
+      6. php artisan server
+   Not Customize as per requirement.
+
+Q134. What is Breeze package in Laravel? and how to install and use it?    
+A: This package provies features related to Authentication, user management and front-end development.
+   It is the lightweight Authentication feature.
+   To Install it:
+       1. composer require laravel/breeze --dev
+       2. php artisan breeze:install
+       3. php artisan migrate
+       4. php artisan server
+   Access the authentication routes, such as /login, /register, /password/reset, and /email/verify, to test your authentication features.
+
+Q135. What are Contracts in Laravel?
+A: Laravel's "contracts" are a set of interfaces that define the core services provided by the framework.
+   Queue and Mailer are some examples of the Laravel Contracts.
+   Example:
+       Illuminate\Contracts\Queue\Queue
+       lluminate\Contracts\Mail\Mailer
+
+Q136. What is pluck method in laravel?
+A: The pluck() method is used to retrieve a single column's value from the first result of a query. 
+   Example:
+        $userID = DB::table('users')->where('email', 'john@example.com')->pluck('id');
+
+Q137. What is Laravel Chunk or chunk method?
+A:  This method is particularly useful when you need to perform some operation on each row of a large table without loading the entire result set into memory.
+    Chunk first argument pass the count and second the closure function.
+    Example:
+          DB::table('orders')
+            ->where('status', 'pending')
+            ->chunk(200, function ($orders) {
+                foreach ($orders as $order) {
+                    // Process each pending order
+                    // For example, send a reminder email or update the order status
+                }
+            });
+
+Q138. How do you use the has() and doesntHave() methods in Laravel?
+A: These methods are particularly useful when working with Eloquent relationships to retrieve records that have or don't have associated related records.
+   Using Has Method:
+       $usersWithPosts = User::has('posts')->get();
+   Using doesnt have mathod:
+       $usersWithoutPosts = User::doesntHave('posts')->get();
+
+Q139. What is withCount() count method in Laravel?
+A: It is used to get count of records from the related model.
+   Example:
+       1. $authors = Author::withCount(['books', 'reviews'])->get();
+       2. foreach ($authors as $author) {
+                echo "Author: {$author->name}, Books: {$author->books_count}, Reviews: {$author->reviews_count}<br>";
+            }
+
+Q140. How to send ajax request in Laravel?
+A:   1. Add Route:
+        Route::get('/ajax-example', 'AjaxController@example')->name('ajax.example');
+     2.  Write Javascript Code:
+               <script>
+                    $(document).ready(function () {
+                        $('#ajaxButton').click(function () {
+                            $.ajax({
+                                url: "{{ route('ajax.example') }}",
+                                method: 'GET',
+                                dataType: 'json',
+                                success: function (data) {
+                                    $('#response').html(data.message);
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(xhr.responseText);
+                                }
+                            });
+                        });
+                    });
+                </script>
+     3. Controller:
+        public function example()
+            {
+                $response = ['message' => 'This is an AJAX response.'];
+
+                return response()->json($response);
+            }
+
+
+Q141. Response methods in Laravel?
+A: Customizing the Status Code:
+       return response('Not Found', 404);
+   Redirect Responses:
+       return redirect('/new-page');
+   Setting Cookies:
+       return response('Hello, Laravel!')
+             ->cookie('name', 'value', $minutes);
+   Returning JSON Response:
+       return response()->json(['message' => 'Hello, JSON!']);
+   Returning to view
+      return view('welcome');
+   Returning to view with data:
+      $data = ['name' => 'John', 'age' => 30];
+      return view('profile', $data);
+   Redirect back  
+      return back();
+
+Q142. Name some common tools used to send emails in Laravel.
+A: MailTrap, SwiftMailer, SMTP, Mailgun, Postmark etc.
+
+Q143. What are the default routes in laravel?
+A: web.php, api.php, console.php and channels.php
+
+Q144. Explain all the defualt routes and how it is used?
+A: 1. Console.php:
+           The console.php file is where you can define your custom artisan commands, which can then be executed using the php artisan command.
+           Example1:
+                Artisan::command('user:fetch {user}', function ($user) {
+                    $this->info('This is my custom artisan command. User: ' . $user);
+                })->describe('My custom artisan command');
+           Example2:
+                To fetch data using custom command line:
+                 Artisan::command('user:fetch {user}', function ($user) {
+                        Artisan::call('user:fetch', ['user' => $user]);
+                 });
+   2. channels.php:
+           This file is designed for defining and customizing broadcast channels for your Laravel application. 
+   3. web.php : 
+           This file contains routes for our web application,  which need features like sessions, CSRF protection, and cookies.
+           This web based routes are assigned to the web middleware group.
+   4. api.php:
+           This file is used to define api routes.
+           Routes defined in this file are automatically assigned the api middleware group, which includes rate limiting and token-based authentication.
+
+Q145. What is cursor metod in Laravel?
+A: The cursor method in Laravel provides several benefits, particularly when dealing with large datasets.
+   Benefits:
+     1. Memory Efficiency:
+              When you use cursor, Laravel fetches and processes records one at a time, ensuring that only a small portion of the data is in memory at any given time.
+     2. Improves Scaliblity:
+              Because cursor fetches and processes records in smaller batches, it reduces the load on both the database server and the application server.
+     3. It adds Automatic pagination when you use cursor method.
+   Example:
+       foreach (User::where('name', 'kawal')->cursor() as $user) {
+            // Perform your operation on each user record
+            // $user represents a single user record here
+            echo $user->name . "----".$user->email."<br>"; // Example: Display the user's name
+        }  
+
+Q146. In Laravel, which class is used for handling exceptions?
+A: Handler Class is responsible for handling Exceptions.
+   It contains two primary methods:
+    1. Register Method:
+             This method is executed when the exception are thrown.
+             And other various callbacks.
+             Example:
+                   public function register()
+                        {
+                            $this->reportable(function (Throwable $e) {
+                                if ($e instanceof CustomException) {
+                                    // Send an email notification
+                                }
+                            });
+                        }
+    2. Render method:
+              The render method is responsible for rendering the HTTP response for exceptions. When an exception occurs in your application.
+              Example:
+                    public function render($request, Throwable $exception)
+                    {
+                        if ($exception instanceof CustomException) {
+                            return response()->view('errors.custom', ['exception' => $exception], 500);
+                        }
+
+                        return parent::render($request, $exception);
+                    }
+
+Q147. What are some of the Aggregates methods provided by query builder in Laravel?
+A: Some of the aggregates methods provided by the query builder in Laravel include:
+    Example 1:
+        count(): $activeUserCount = User::where('status', 'active')->count(); // Count active users
+        sum(): 
+            $totalSales = DB::table('sales')
+                            ->where('status', 'completed')
+                            ->sum('amount'); // Get the total sum of the 'amount' column for completed sales
+        avg()
+        max()
+        min()
+    Example 2:
+        $salesByCategory = DB::table('products')
+            ->join('sales', 'products.id', '=', 'sales.product_id')
+            ->groupBy('products.category')
+            ->select('products.category', DB::raw('SUM(sales.amount) as total_sales'))
+            ->get();
+
+
+Q148. Laravel support which database?
+A: MySQL, PostgreSQL, SQLite and SQL Server.
+
+Q149. What is REPL?
+A: A REPL, which stands for "Read-Eval-Print Loop," is a simple and interactive programming environment.
+   It allows developers to enter, evaluate, and receive the results of code or expressions in real-time.
+   Laravel Tinker is a REPL specifically designed for Laravel.
+
+Q150. What is CSRF attack?
+A: It is an attack that forces authenticated users to submit a request to a Web application against which they are currently authenticated.
+    For example, transferring funds to an attacker's account, changing a victim's email address.
+
+Q151. How to add multiple database connection in Laravel?
+A: 1. Modify ENV File:
+            DB_CONNECTION=mysql
+            DB_HOST=localhost
+            DB_PORT=3306
+            DB_DATABASE=your_db_name
+            DB_USERNAME=bestinterviewquestion
+            DB_PASSWORD=admin@123
+            
+            DB_CONNECTION_SECOND=mysql
+            DB_HOST_SECOND=localhost
+            DB_PORT_SECOND=3306
+            DB_DATABASE_SECOND=your_db_name2
+            DB_USERNAME_SECOND=bestinterviewquestion
+            DB_PASSWORD_SECOND=admin@12345
+   2. Modify config/database.php 
+            'mysql' => [
+                'driver'    => env('DB_CONNECTION'),
+                'host'      => env('DB_HOST'),
+                'port'      => env('DB_PORT'),
+                'database'  => env('DB_DATABASE'),
+                'username'  => env('DB_USERNAME'),
+                'password'  => env('DB_PASSWORD'),
+            ],
+
+            'mysql2' => [
+                'driver'    => env('DB_CONNECTION_SECOND'),
+                'host'      => env('DB_HOST_SECOND'),
+                'port'      => env('DB_PORT_SECOND'),
+                'database'  => env('DB_DATABASE_SECOND'),
+                'username'  => env('DB_USERNAME_SECOND'),
+                'password'  => env('DB_PASSWORD_SECOND'),
+            ],
+    3. Execute Query : $users = DB::connection('your_db_name2')->select();
+
+Q152. What is Repository Pattern in Laravel?
+A: The Repository Pattern is a design pattern commonly used in Laravel to separate the application's data access logic from the rest of the application. 
+   It acts as a bridge between model and controller.
+   Example:
+        1. Create Repository Interface:
+                    // app/Repositories/UserRepositoryInterface.php
+
+                    namespace App\Repositories;
+
+                    interface UserRepositoryInterface
+                    {
+                        public function getById($id);
+                        public function create(array $data);
+                        public function update($id, array $data);
+                        public function delete($id);
+                    }
+        2. Create a Repository class:
+                    // app/Repositories/EloquentUserRepository.php
+
+                    namespace App\Repositories;
+
+                    use App\Models\User;
+
+                    class EloquentUserRepository implements UserRepositoryInterface
+                    {
+                        public function getById($id)
+                        {
+                            return User::find($id);
+                        }
+
+                        public function create(array $data)
+                        {
+                            return User::create($data);
+                        }
+
+                        public function update($id, array $data)
+                        {
+                            $user = User::find($id);
+                            if (!$user) {
+                                return false;
+                            }
+
+                            return $user->update($data);
+                        }
+
+                        public function delete($id)
+                        {
+                            return User::destroy($id);
+                        }
+                    }
+        3. Binding the Service Provider:
+               
+                use App\Repositories\UserRepositoryInterface;
+                use App\Repositories\EloquentUserRepository;
+
+                public function register()
+                {
+                    $this->app->bind(UserRepositoryInterface::class, EloquentUserRepository::class);
+                }
+
+Q153. How to make secured Laravel Application?
+A: Adding Authentication, authorization, Encryption/ Hashing sensitive words like password and CSRF Protection.
+
+Q154. How to call api in laravel?
+A: To call an API we can use Laravel built-in HTTP client, which provides a expressive way to make HTTP requests to external api or services.
+   Example:
+        1. For Get API:
+                use Illuminate\Support\Facades\Http;
+
+               $response = Http::get('https://api.example.com/posts');
+               $data = $response->json(); // Parse the JSON response
+               $statusCode = $response->status(); // Get the HTTP status code
+        2. Error Handling:
+               if ($response->successful()) {
+                    // API call was successful
+                    // Handle the response data
+                } else {
+                    // API call failed
+                    // Handle the error
+                    $errorMessage = 'API request failed with status code: ' . $response->status();
+                }
+        3. For POST API:
+                $response = Http::post('https://api.example.com/create-post', [
+                    'title' => 'New Post',
+                    'content' => 'This is the content of the new post.',
+                ]);
+        4. Pass Auth Token:
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $token,
+                ])
+                ->post('https://api.example.com/protected-endpoint', [
+                    'data_key' => 'data_value',
+                ]);
+        5. Post Attachments:
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $token, // Use 'Bearer' for token-based authentication
+                    // Other headers if required
+                ])
+                ->attach('image', file_get_contents($imagePath), 'image.jpg')
+                ->post('https://api.example.com/upload-image-endpoint', [
+                    'data_key' => 'data_value',
+                ]);
+
+Q155. What is Rate Limiting in Laravel?
+A: Rate limiting in Laravel is a security feature that helps protect your web application from abuse, such as excessive API requests or login attempts.
+   It also allows to block serveral IP address.
+
+Q156. What is CLI?
+A: CLI stands for Command Line Interface
+   CLI is a command line program that accepts text input to execute operating system functions.
+   It is very helpful for web development like laravel, php. 
+
+Q157. What is Notifications and How it is used?
+A: Notifications are a way to send notifications or msgs like sending mail, SMS etc.
+   It helps to decouple the notification logic from the core application logic.
+   To use it:
+       1. Create a Notification Class: php artisan make:notification NewPostNotification
+       2. Define the Notification  Content:
+                <?php
+                    namespace App\Notifications;
+                    use Illuminate\Notifications\Messages\MailMessage;
+                    use Illuminate\Support\Facades\View;
+                    use Illuminate\Support\HtmlString;
+                    use Illuminate\Bus\Queueable;
+                    use Illuminate\Contracts\Queue\ShouldQueue;
+                    use Illuminate\Notifications\Notification;
+
+                    class NewPostNotification extends Notification
+                    {
+                        use Queueable;
+
+                        /**
+                        * Create a new notification instance.
+                        */
+                        public function __construct()
+                        {
+                            //
+                        }
+
+                        /**
+                        * Get the notification's delivery channels.
+                        *
+                        * @return array<int, string>
+                        */
+                        public function via(object $notifiable): array
+                        {
+                            return ['mail'];
+                        }
+
+                        /**
+                        * Get the mail representation of the notification.
+                        */
+                        public function toMail(object $notifiable): MailMessage
+                        {
+
+                            return (new MailMessage)
+                                ->view('emails.new_post_notification')  //add page for notification
+                                ->line('The introduction to the notification.')
+                                ->action('Notification Action', url('/test'))
+                                ->line('Thank you for using our application!');
+                        }
+
+                        /**
+                        * Get the array representation of the notification.
+                        *
+                        * @return array<string, mixed>
+                        */
+                        public function toArray(object $notifiable): array
+                        {
+                            return [
+                                //
+                            ];
+                        }
+                    }
+        3. Triggering Notifications:
+                     $user = User::find(2);
+                     $user->notify(new NewPostNotification('kawal'));
+ 
+
+///(i) Research This Question Practically
+Q158. What is Laravel Horizon?
+A: Laravel Horizon is a real-time monitoring and queue management tool provided by the Laravel framework. 
+   It is used to monitor, manage queue more effectively.
+   Benefits:
+       1. Real Time monitoring
+       2. Pause and Retry Failed jobs
+       3. Increase Scaliblity
+       4. Laravel Horizon includes a set of Artisan commands that allow you to manage your queue workers. For example, you can start, stop, and restart it.
+
+Q159. What are Policies in Laravel and How to use it?
+A: Policies are a way to organize authorization logic for specefic model instances.
+   They help you determine rule that weather a particular is allowed to perform certain actions on particular model.
+   Policies make your authorization code cleaner, more maintainable, and easier to manage.
+   To use it:
+       1. Generate a Policy Class: php artisan make:policy PostPolicy
+       2. In the Genrated page in App\Policies\PostPolicy
+                      Add you logic authorization method which return either true or false. Example:
+                           <?php
+                                namespace App\Policies;
+
+                                use App\Models\User;
+                                use App\Models\Post; // Import the Post model
+
+                                class PostPolicy
+                                {
+                                    /**
+                                    * Create a new policy instance.
+                                    */
+                                    public function __construct()
+                                    {
+                                        //
+                                    }
+
+                                    public function update(User $user, Post $post)
+                                    {
+                                        return $user->id == $post->id; // Authorization logic for updating a post
+                                    }
+                                }
+
+                                In the above given update method $user->id is the authenticated user id or you can add user role id and post->id can be replace by other option like role and other
+        3. Register Your Policy in AuthServiceProvider:
+                use App\Models\Post;
+                use App\Policies\PostPolicy;
+
+                protected $policies = [
+                    Post::class => PostPolicy::class,
+                ];
+        4. Use in Controller:
+                use App\Models\Post;
+
+                public function edit(Post $post)
+                {
+                    $this->authorize('update', $post);
+
+                    // User is authorized to update the post, proceed with editing.
+                }       
+                               OR 
+                echo 1;
+                echo '<br>';
+                $post = Post::find(10);
+                $this->authorize('update', $post); //if true, than continue, else 403 Unauthorized Error
+            
+                echo 2;
+        5. Using Policies in Blade View:
+                @can('update', $post)
+                    <a href="{{ route('post.edit', $post) }}">Edit Post</a>
+                @endcan
+
+Q160. What are Gates and how it is used in Laravel?
+A: In Laravel, Gates provide a simple and expressive way to define and manage authorization logic in your application.
+   Gates are typically used for more complex application.
+   To use a Gate, you can call the allows or denies method on the Gate facade. 
+   To use it:
+       1. Define Gate using Gate Facades:
+             use Illuminate\Support\Facades\Gate;
+                public function boot(): void
+                    {
+                        //
+                        Gate::define('update-post', function ($user, $post) {
+                            return $user->id === $post->user_id;
+                        });
+                    }
+            $user->id is the current authenticated $user id
+       2. Manual Test in controller:
+                 $post = Post::find(10);
+                   if (Gate::allows('update-post', $post)) {
+                        echo 'Allowed';
+                    } else {
+                        echo 'UnAuthorized';
+                    }
+                OR
+                use Illuminate\Support\Facades\Gate;
+
+                public function update(Post $post)
+                {
+                    if (Gate::allows('update-post', $post)) {
+                        // User is authorized to update the post, proceed with the update logic
+                        // ...
+                    } else {
+                        // User is not authorized; handle unauthorized access
+                        // ...
+                    }
+                }
+       3. Using Gates in Blade Template:
+               @can('update-post', $post)
+                    <a href="{{ route('post.edit', $post) }}">Edit Post</a>
+                @endcan
+
+Q161. What is Asset Bundling in Laravel?
+A: In Laravel, asset bundling refers to the process of combining and optimizing various web assets like CSS and JavaScript files into a single, more efficient file.
+   Vite is a modern frontend build tool that provides an extremely fast development environment and bundles your code for production.
+   When building applications with Laravel, you will typically use Vite to bundle your application's CSS and JavaScript files into production ready assets.
+   After running npm install vite is configured via vite.config.js and we can customize that file based on our needs.
+
+Q162. What is Encryption for security in Laravel?
+A: Laravel encrypting service provides a simple, convenient interface for encryting and decrypting sensitive text.
+   Two Ways:
+      1. Using Facades:
+            use Illuminate\Support\Facades\Crypt; 
+              $encryptedData = Crypt::encryptString('Your sensitive data');
+              $decryptedData = Crypt::decryptString($encryptedData);
+      2. Using Helper:
+            $encryptedData = encrypt('Your sensitive data');
+            $decryptedData = decrypt($encryptedData);
+
+Q163. Difference b/w Encryption and Decryption?
+A: 1. Purpose: 
+          Encryption is used to enrypt a plain text using a secret key which make them unreadable to unauthorized user and decrypt it later.
+          Hashing is used to convert data such as password into a fixed-length string of characters, . The primary goal is not to recover the original data but to verify if it matches the stored hash.
+   2. Reversiblity:
+          Encryption is reversible.
+          Hashing is not reversible, you cannot retrive old data.
+   3. Use Cases:
+          Encryption is typically used for protecting sensitive information like passwords, credit card numbers etc.
+           Hashing is commonly used for password storage and verification.
+
+Q164. What is a pivot table in Laravel?
+A: Suppose you have two entities: users and roles, and each user can have multiple roles, and each role can be associated with multiple users. 
+   In this case, you would set up a pivot table, often named in a convention like role_user, to manage this relationship. 
+   Thus, Pivot table is a table which holds foreign key of both the tables.
+
+Q165. What is the N+1 query problem in Laravel and how can you solve it?
+A: The N+1 query problem occurs when you access related data in a loop, which results in a new query for each item.
+   This can be solved using eager loading with the with() method to load all related data in a single query.
+   Eager Loading Retrives all record with related model at once.
+   Example:
+        $users = User::find([1, 4, 6])->get(); //getting 5 records from User Model
+
+        foreach ($users as $user) { //looping 5 times
+            $posts = $user->posts; // Executing query 5 times?
+        }
+
+        To solve this issue:
+            $users = User::with('posts')->get(); //getting 5 records from User Model and all data accessed with related model in $users
+
+            foreach ($users as $user) { //looping 5 times
+                $posts = $user->posts; //Not trigger query 5 times?
+            }
+
+Q166. How can you prevent SQL injection in Laravel and What are some ways Laravel ensures SQL Injection protection?
+A: Laravel uses PDO parameter binding in its Query Builder and Eloquent ORM, which makes it immune to SQL injection attacks.
+
+Q167. How does Laravel handle XSS (Cross Site Scripting) attacks?
+A: Laravel automatically escapes output via the curly brace syntax {!! !!} to protect against XSS attacks.
+
+Q168. What is morpheTo and morphby method in Polymorphic relationship?
+A: MorphTo:
+       It is typically used on the model that can belong to various other models. 
+       Like a Comment model that can belong to both Post and Video models.
+   MorphBy:
+      It allows a model to be associated with multiple instances of other models. 
+      Like a Tag model that can be associated with both Post and Video models.
+
+Q169. Briefly describe the project structure of a typical Laravel project.
+A: 1. App folder:
+           It contains five sub-folders named Console folder, Exceptions folder, Http folder, Models folder and Providers folder.
+           These sub-folders contain exception handlers, controllers, middleware, service providers and models.
+   2. bootstrap folder: The bootstrap folder contains bootstrap files.
+   3. config folder: The config folder contains configuration files.
+   4. Database Folder:
+            The database folder contains database files.
+            It contains three sub-folders named factories folder, migrations folder and seeders folder.
+            These sub-folders contain a large set of data, database migrations and seeds.
+   5. Public folder: The public folder contains files that are used to initialize the application
+   6. Resources folder: The resources folder contains HTML, CSS and JavaScript files. It contains four sub-folders named css folder, js folder, lang folder and views folder.
+   7. Routes folder: The routes folder contains route definitions.
+   8. Storage folder: The storage folder contains cache files, session files, images folder etc.
+   9. Vendor folder: The vendor folder contains all the composer dependency packages.
+   10. .env file: The .env file contains environmental variables.
+   11. composer.json file: The composer.json file contains dependencies.
+   12. package.json file: The package.json file is for the frontend, and it is similar to the composer.json file.
+
+// (ii) NMI Practically
+Q170. What is Laravel Forge?
+A: It is a server management tool for PHP applications. 
+
+Q171. What is Laravel Vapor?
+A: It is a completely serverless deployment platform, powered by AWS.
+   The laravel/vapor-core package must be installed as a dependency of every Laravel application that is deployed using Vapor. 
+   Benefits:
+       1. Asset Compilation: Vapor can compile and optimize your CSS and JavaScript assets
+       2. Queue Workers: It supports running Laravel queue workers.
+       3. Automatic Scaling: Vapor can automatically scale your application.
+
+Q172. Explain HTTP verb in laravel?
+A: 1. GET method:
+        GET requests are commonly used for retrieving information from the server.
+        Example:
+             Route::get('/articles', 'ArticleController@index');
+             Route::get('/articles/{id}', 'ArticleController@show');
+   2. POST method:
+        POST requests are often used for form submissions, creating new records in a database.
+        Example:
+            Route::post('/articles', 'ArticleController@store');
+   3. PUT and Patch method:
+        PUT method is used to update a specified resource or create one if it doesn't exist. 
+        PUT method can be used for updating existing records in the database. 
+        PATCH method is used to apply partial modifications to a resource.
+        In Laravel, PATCH requests are commonly used to update specific fields or attributes of a resource, rather than replacing the entire resource.
+        Example:
+            Route::put('/articles/{id}', 'ArticleController@update');
+   4. Delete method:
+        DELETE requests are used for deleting records or resources from the server.
+        Example:
+            Route::delete('/articles/{id}', 'ArticleController@destroy');
+
+Q173. What are Laravel Illuminate components in Laravel?
+A: The Illuminate components are a set of foundational classes and packages that provide various features and functionalities that Laravel is built upon. 
+   These components handle essential tasks such as routing, database access, container dependency injection, and more.
+   These are core part of Laravel framework.
+   Some Illuminate components are Illuminate Routing, Illuminate Database, Illuminate Container, Illuminate HTTP, Illuminate Events, Illuminate Validation, Illuminate Cache, Illuminate Mail etc.
+   Example:
+      use Illuminate\Support\Facades\Route
+          Route::get('/posts', 'PostController@index');
+      use Illuminate\Database\Eloquent\Model;
+          class Post extends Model
+            {
+                protected $fillable = ['title', 'content'];
+            }
+
+Q174. What is View Composer in Laravel?
+A: In Laravel, view composers are a way to share data with multiple views or layouts across your application. 
+   View composers are particularly useful when you need to inject common data, such as user information or navigation menus.
+   Example:
+        Add this code in register method of AppServiceProvider
+        use Illuminate\Support\Facades\View;
+        // Define a view composer for the 'welcome' view
+            View::composer('welcome', function ($view) {
+                // Get the current user's name (you can replace this with actual user data)
+                $userName = "Kawal Mehra";
+
+                // Share the user's name with the 'welcome' view
+                $view->with('userName', $userName);
+            });
+
+        To access: 
+              <!-- welcome.blade.php -->
+              <h1>Welcome, {{ $userName }}!</h1>
+
+Q175. How to add mulitlogin system in Laravel?
+A: 1. Generate 2 middleware:
+            php artisan make:middleware AdminMiddleware
+            php artisan make:middleware CustomerMiddleware
+   2. Modify Middleware and authenticate user as per requrement like:
+                In AdminMiddleware:
+                       if($request->name != 'Admin'){
+                            return redirect('/UnAuth');
+                        }
+                        return $next($request);
+                In CustomerMiddleware: 
+                        if($request->name != 'Customer'){
+                            return redirect('/UnAuth');
+                        }
+                        return $next($request);
+   3. Register Middleware in Kernal:
+             protected $routeMiddleware = [
+                // ...
+                'admin' => \App\Http\Middleware\AdminMiddleware::class,
+                'customer' => \App\Http\Middleware\CustomerMiddleware::class,
+            ];
+   4. Web.php:
+           Route::middleware(['auth', 'admin'])->group(function () {
+                Route::prefix('admin')->group(function () {
+                    Route::get('/home', [UserController::class, 'admin']);
+                });
+            });
+
+            Route::middleware(['auth', 'customer'])->group(function () {
+                Route::prefix('customer')->group(function () {
+                    Route::get('/home', [UserController::class, 'customer']);
+                });
+            });
+
+Q176. What is Session-Based Authentication (Traditional Auth) and OAuth 2.0 Authentication?
+A:  1. Security:
+         Session-based authentication relies on server-side session storage and cookies.
+         OAuth 2.0 focuses on token-based authentication and authorization. It uses access tokens and refresh tokens to grant access to resources. Like Passport
+    2. Uses:
+         Session-based authentication is primarily used for web applications with user interfaces. 
+         OAuth 2.0 is designed with API security in mind. It is commonly used for securing APIs.
+    3. Implementation Complexity:
+         Session-based authentication Implementation is simple straightforward especially in Laravel.
+         OAuth 2.0 authentication implementation is more complex, but laravel passport simplified this process but still require careful configuration.
+
+    
